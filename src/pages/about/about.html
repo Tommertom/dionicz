@@ -7,5 +7,24 @@
 </ion-header>
 
 <ion-content padding>
+  <h3>Domoticz Settings</h3>
+  <ion-list inset>
+    <ion-item>
+      <ion-label>Domoticz server IP:</ion-label>
+      <ion-input type="text" [(ngModel)]="settings.server"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Domoticz port:</ion-label>
+      <ion-input type="text" [(ngModel)]="settings.port"></ion-input>
+    </ion-item>
+    <ion-item>
+      <h2>Number of entities found : {{deviceList.length}} </h2>
+      <p *ngIf="deviceList.length>0"> Go to menu to see the entities found</p>
+    </ion-item>
+  </ion-list>
 
+  <pre>
+    {{state}}
+  </pre>
+  <button ion-button full (click)="startObserving()">Start observing devices</button>
 </ion-content>

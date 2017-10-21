@@ -1,3 +1,6 @@
+
+import { HttpModule } from '@angular/http';
+import { DomoticzProvider } from './../providers/domoticz.provider';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -11,16 +14,24 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { WidgetComponent } from './../components/widget/widget.component';
+import { DomitczWidgetComponent } from './../components/domoticzwidget/domoticzwidget.component';
+import { DomitczDeviceWidgetComponent } from './../components/domoticzwidget/domoticzdevicewidget.component';
+
+
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    WidgetComponent,
+    DomitczWidgetComponent,
+    DomitczDeviceWidgetComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -33,7 +44,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   providers: [
     StatusBar,
-    SplashScreen,
+    SplashScreen,DomoticzProvider,
+
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
