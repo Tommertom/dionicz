@@ -11,8 +11,10 @@
 
 
 <ion-list *ngIf="canToggle">
-  <ion-label>Pepperoni</ion-label>
-  <ion-toggle (ionChange)="toggleSwitch()"></ion-toggle>
+  <ion-item>
+    <ion-label>Pepperoni</ion-label>
+    <ion-toggle (ionChange)="toggleSwitch()"></ion-toggle>
+  </ion-item>
 </ion-list>
 
 
