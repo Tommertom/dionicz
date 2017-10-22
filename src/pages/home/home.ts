@@ -18,9 +18,8 @@ export class HomePage {
     private domoticz: DomoticzProvider) {
     this.domoticzStateSubscription =
       this.domoticz.getDomoticzStateObservable().subscribe(state => {
-       this.widgetList = Object.keys(state);
+        this.widgetList = Object.keys(state);
         this.domoticzState = state;
-    //    console.log('Domoitczstate', state);
       })
   }
 }

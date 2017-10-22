@@ -18,6 +18,7 @@ import { WidgetComponent } from './../components/widget/widget.component';
 import { DomitczWidgetComponent } from './../components/domoticzwidget/domoticzwidget.component';
 import { DomitczDeviceWidgetComponent } from './../components/domoticzwidget/domoticzdevicewidget.component';
 
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,11 @@ import { DomitczDeviceWidgetComponent } from './../components/domoticzwidget/dom
   ],
   imports: [
     BrowserModule,HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+         driverOrder: ['sqlite','indexeddb',  'websql']
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
