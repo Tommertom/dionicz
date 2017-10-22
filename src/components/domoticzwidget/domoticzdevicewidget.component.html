@@ -9,6 +9,11 @@
   </ion-item>
 </ion-list>
 
+<ion-list *ngIf="canToggle">
+  <ion-item>
+    <ion-toggle (ionChange)="toggleSwitch()" [checked]="payload.Data=='On'" [(ngModel)]="data._switched"></ion-toggle>
+  </ion-item>
+</ion-list>
 
 <ion-list *ngIf="canToggle">
   <ion-item>
