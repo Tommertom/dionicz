@@ -27,6 +27,12 @@ export class MyApp {
       splashScreen.hide();
     });
 
+    this.domoticz.initDomoticzService({
+      server: '192.168.178.73',             // IP adress
+      port: '8080',              // number as a string, with no colon ('8080')
+      protocol: 'http://',           // https:// or http://
+      refreshdelay: '5000'       // the ms to wait before a full refresh
+    });
 
     this.storage.ready()
       .then(() => {
@@ -35,14 +41,15 @@ export class MyApp {
       .then((value) => {
         // value can be null
         if (value)
-          this.domoticz.initDomoticzService(value)
+          //  this.domoticz.initDomoticzService(value)
           // lets default
-        else this.domoticz.initDomoticzService({
-          server: '192.168.178.73',             // IP adress
-          port: '8080',              // number as a string, with no colon ('8080')
-          protocol: 'http://',           // https:// or http://
-          refreshdelay: '5000'       // the ms to wait before a full refresh
-        });
+          //  else 
+          this.domoticz.initDomoticzService({
+            server: '192.168.178.73',             // IP adress
+            port: '8080',              // number as a string, with no colon ('8080')
+            protocol: 'http://',           // https:// or http://
+            refreshdelay: '5000'       // the ms to wait before a full refresh
+          });
       })
   }
 }

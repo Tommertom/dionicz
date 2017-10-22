@@ -29,30 +29,7 @@ export class DomitczDeviceWidgetComponent { //extends WidgetComponent
 
     ngAfterContentInit() {
 
-        function cleanToNumber(text) {
-            if (text) return text.replace(/[^\d.-]/g, '')
-            else return null;
-        }
-
         this.data = Object.assign({}, this.payload);
-
-        console.log('PAYLOAD ' + this.payload['Name'] + ' ' + this.payload['idx'], this.payload)
-
-        // let's normalise the data received
-        this.data['_devicetype'] = this.payload['Type'] == 'General' ? this.payload['SubType'] : this.payload['Type'];
-
-        this.data['_switched'] = (this.payload['Data'] == 'On');
-
-        this.data['_numbervalue'] = Number(cleanToNumber(this.payload['Data']));
-
-        this.data['_level'] = this.payload['Level'];
-        this.data['_setpoint'] = Number(this.payload['SetPoint']);
-
-        this.data['_counter'] = cleanToNumber(this.payload['Counter']);
-        this.data['_counterdeliv'] = cleanToNumber(this.payload['CounterDeliv']);
-        this.data['_counterdelivtoday'] = cleanToNumber(this.payload['CounterDelivToday']);
-        this.data['_usage'] = cleanToNumber(this.payload['Usage'])
-        this.data['_usagedeliv'] = cleanToNumber(this.payload['UsageDeliv'])
 
         // and configure the UI elements
         this.canToggle =

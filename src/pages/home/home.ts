@@ -16,11 +16,23 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     private domoticz: DomoticzProvider) {
-    this.domoticzStateSubscription =
-      this.domoticz.getDomoticzStateObservable().subscribe(state => {
-        this.widgetList = Object.keys(state);
-        this.domoticzState = state;
-      })
+
+    let s = this.domoticz.getDomoticzPoller()
+      .subscribe(_ => { })
+
+    this.repeatRefresh();
   }
+
+  ionViewWillEnter() {
+  }
+
+  repeatRefresh() {
+    let state = this.domoticz.getState();
+    this.widgetList = Object.keys(state);
+    this.domoticzState = state;
+    console.log('SADSDSAD', state, this.widgetList);
+    setTimeout(_ => { this.repeatRefresh(); }, 3000);
+  }
+
 }
 

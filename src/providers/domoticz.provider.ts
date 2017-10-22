@@ -1,16 +1,25 @@
+
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { BehaviorSubject } from "rxjs/Rx";
+//import { BehaviorSubject } from "rxjs/Rx";
 
-//
-// Based on https://coryrylan.com/blog/angular-observable-data-services
-//
-//return this.createMarkerStyle(<MarkerSymbolInfo> symbolInfo); reateStyle( symbolInfo : SymbolInfo)
-//// Original syntax
-//var markerSymbolInfo = <MarkerSymbolInfo> symbolInfo;
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/mergeAll';
+//import 'rxjs/add/operator/concatAll';
+//import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/timeout';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+//import 'rxjs/add/operator/mergeMap';
+//import 'rxjs/add/operator/onErrorResumeNext';
+//import 'rxjs/add/operator/toArray';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/switchMap';
+//import 'rxjs/add/operator/interval';
 
-// Newer additional syntax
-//var markerSymbolInfo = symbolInfo as MarkerSymbolInfo;
+import 'rxjs/add/observable/interval';
 
 export interface DomoticzSettingsModel {
     server: string;             // IP adress
@@ -28,9 +37,8 @@ export class DomoticzProvider {
         protocol: '',           // https:// or http://
         refreshdelay: 1
     };
+
     private doRefresh: boolean = false;
-    private domoticzItemStream: BehaviorSubject<Object> = new BehaviorSubject({});
-    private domoticzStateStream: BehaviorSubject<Object> = new BehaviorSubject({});
 
     private domoticzState: Object = {};
     private isInitialised: boolean = false;
@@ -38,14 +46,8 @@ export class DomoticzProvider {
     constructor(private http: Http) { };
 
     initDomoticzService(settings) {
-        // check the settings
         this.settings = settings;
-
         this.isInitialised = true;
-
-        // start refreshing
-        this.doRefresh = true;
-        this.repeatDomoticzRefresh();
     }
 
     getSettings() {
@@ -53,70 +55,65 @@ export class DomoticzProvider {
     }
 
     changeSettings(settings) {
-        // check the settings
         this.settings = settings;
     }
 
-    refreshDomoticz() {
-        if (this.isInitialised) {
-            this.emitAllDevices();
-            this.emitAllPlans();
-            this.emitAllScenes();
+    private getDomoticzPoll(url, category) {
+        return this.http.get(this.settings.protocol +
+            this.settings.server + ':' +
+            this.settings.port + url)
+            .timeout(3000)
+            .filter(input => { return (input.ok && (input.status == 200)) })
+            .map((data) => data.json())
+            .filter(data => data['status'] == 'OK')
+            .map(data => data['result'])
+            .mergeAll()
+            .map(data => Object.assign(data, { _type: category }))
+    }
+
+    getDomoticzPoller() {
+
+        function cleanToNumber(text) {
+            if (text) return text.replace(/[^\d.-]/g, '')
+            else return null;
         }
+
+        return Observable
+            .interval(this.settings.refreshdelay)
+            //            .filter(_ => this.settings.server != "")
+            .switchMap(() =>
+                this.getDomoticzPoll('/json.htm?type=devices&used=true&order=Name', 'device')
+                    .map(data => {
+                        // let's normalise the data received
+                        data['_devicetype'] = data['Type'] == 'General' ? data['SubType'] : data['Type'];
+                        data['_switched'] = (data['Data'] == 'On');
+                        data['_numbervalue'] = Number(cleanToNumber(data['Data']));
+                        data['_level'] = data['Level'];
+                        data['_setpoint'] = Number(data['SetPoint']);
+                        data['_counter'] = cleanToNumber(data['Counter']);
+                        data['_counterdeliv'] = cleanToNumber(data['CounterDeliv']);
+                        data['_counterdelivtoday'] = cleanToNumber(data['CounterDelivToday']);
+                        data['_usage'] = cleanToNumber(data['Usage'])
+                        data['_usagedeliv'] = cleanToNumber(data['UsageDeliv'])
+
+                        return data;
+                    })
+                    .do(item => this.storeState(item, "device"))
+
+                    .concat(
+                    this.getDomoticzPoll('/json.htm?type=plans&order=name&used=true', 'plan')
+                        .do(item => this.storeState(item, "plan"))
+                    )
+
+                    .concat(
+                    this.getDomoticzPoll('/json.htm?type=scenes', 'scene')
+                        .do(item => this.storeState(item, "scene"))
+                    )
+            )
     }
-
-
-    private emitAllScenes() {
-        let url = this.settings.protocol +
-            this.settings.server + ':' +
-            this.settings.port +
-            '/json.htm?type=scenes';
-
-        this.doHTTPForSubject(url, 'scene');
-    }
-
-    // TODO: enrich plan data with array of device IDX linked to the plan
-    // for each plan: /json.htm?type=command&param=getplandevices&idx=2
-    private emitAllPlans() {
-        let url = this.settings.protocol +
-            this.settings.server + ':' +
-            this.settings.port +
-            '/json.htm?type=plans&order=name&used=true';
-
-        this.doHTTPForSubject(url, 'plan');
-    }
-
-    private doHTTPForSubject(url: string, type: string) {
-
-
-        this.http.get(url)
-            .map(res => res.json())
-            .mergeMap(res => res['result'])
-            // .do(stuff => { console.log('STUFF', stuff) })
-            .subscribe(item => {
-                this.domoticzItemStream.next(Object.assign({ _type: type }, item));
-                this.storeState(item, type);
-            }, (err) => {
-                console.log('Error in doHTTPForSubject', url, err);
-                this.domoticzItemStream.next({ error: true, errormsg: err });
-            }, () => {
-                this.domoticzStateStream.next(this.domoticzState);
-            });
-    }
-
-
-
-    private emitOneDevice(idx) {
-        let url = this.settings.protocol +
-            this.settings.server + ':' +
-            this.settings.port +
-            '/json.htm?type=devices&rid=' + idx;
-
-        this.doHTTPForSubject(url, 'device');
-    }
-
 
     storeState(item, type) {
+
         // taken from the internet, somewhere
         function hashCode(txt) {
             return txt.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
@@ -126,44 +123,13 @@ export class DomoticzProvider {
         this.domoticzState[hash] = Object.assign({ _type: type }, item);
     }
 
-    getSate() {
+    getState() {
         return this.domoticzState;
     }
 
-    private emitAllDevices() {
-        let url = this.settings.protocol +
-            this.settings.server + ':' +
-            this.settings.port +
-            '/json.htm?type=devices&used=true&order=Name';
-
-        this.doHTTPForSubject(url, 'device');
-    }
-
-    /**
-       * Get observable to watch Domoticz Device data
-       * 
-       */
-    getDomoticzItemObservable() {
-        this.refreshDomoticz()
-
-        // return the observable
-        return this.domoticzItemStream.asObservable().skip(1); // hack? need to skip the first item emitted due to the creation
-    }
-
-    getDomoticzStateObservable() {
-        this.refreshDomoticz()
-
-        // return the observable
-        return this.domoticzStateStream.asObservable().skip(1); // hack? need to skip the first item emitted due to the creation
-    }
-
     doneDomoticzService() {
-        // stop pulling data
         this.doRefresh = false;
         this.isInitialised = false;
-        // and finish the streams
-        this.domoticzItemStream.complete();
-        this.domoticzStateStream.complete()
     }
 
     /**
@@ -177,10 +143,9 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
-    ///json.htm?type=command&param=setcolbrightnessvalue&idx=99&hue=274&brightness=40&iswhite=false
     setColorBrightnessHUE(idx: string, hue: number, brightness: number) {
         this.callAPI(
             '/json.htm?type=command&param=setcolbrightnessvalue&idx=[IDX]&hue=[HUE]&brightness=[BRIGHT]&iswhite=false',
@@ -188,11 +153,10 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
 
-    ///json.htm?type=command&param=setcolbrightnessvalue&idx=99&hex=RRGGBB&brightness=100&iswhite=false
     setColorBrightnessHEX(idx: string, hex: string) {
         this.callAPI(
             '/json.htm?type=command&param=setcolbrightnessvalue&idx=[IDX]&hex=[HEX]&brightness=100&iswhite=false',
@@ -200,7 +164,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
 
@@ -216,7 +180,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
 
@@ -231,7 +195,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
     /**
@@ -245,7 +209,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
     /**
@@ -259,7 +223,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
     /**
@@ -273,7 +237,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
     /**
@@ -287,7 +251,7 @@ export class DomoticzProvider {
             .subscribe(
             () => { },
             () => { },
-            () => { this.emitOneDevice(idx) });
+            () => { });
     }
 
     /**
@@ -319,26 +283,6 @@ export class DomoticzProvider {
             this.settings.port + api)
             .timeout(3000)
     }
-
-    forceRefresh() {
-        this.refreshDomoticz();
-    }
-
-    private repeatDomoticzRefresh() {
-
-        // refresh all observables
-        this.refreshDomoticz();
-
-        //        this.domoticzStateStream.next(this.domoticzState);
-
-        //and repeat yourself if needed
-        if (this.doRefresh)
-            setTimeout(() => {
-                //          console.log('DOING REFRESH');
-                this.repeatDomoticzRefresh()
-            }, this.settings.refreshdelay);
-    }
-
 }
 
 /*
