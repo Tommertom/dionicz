@@ -316,7 +316,8 @@ export class DomoticzProvider {
         return this.http.get(
             this.settings.protocol +
             this.settings.server + ':' +
-            this.settings.port + api);
+            this.settings.port + api)
+            .timeout(3000)
     }
 
     forceRefresh() {

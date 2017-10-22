@@ -1,5 +1,3 @@
-<ion-toggle *ngIf="canToggle" (ionChange)="toggleSwitch()" [checked]="payload.Data=='On'" [(ngModel)]="data._switched"></ion-toggle>
-
 <ion-list *ngIf="hasDimmer">
   <ion-item>
     <ion-range (ionChange)="changeLevel(data['_level'])" min="0" max="payload['MaxDimlevel']" [(ngModel)]="data['_level']">
@@ -11,17 +9,10 @@
 
 <ion-list *ngIf="canToggle">
   <ion-item>
-    <ion-toggle (ionChange)="toggleSwitch()" [checked]="payload.Data=='On'" [(ngModel)]="data._switched"></ion-toggle>
+    <ion-label>Switch</ion-label>
+    <ion-toggle (ionChange)="toggleSwitch()" [checked]="payload.Data =='On'" [(ngModel)]="data._switched"></ion-toggle>
   </ion-item>
 </ion-list>
-
-<ion-list *ngIf="canToggle">
-  <ion-item>
-    <ion-label>Pepperoni</ion-label>
-    <ion-toggle (ionChange)="toggleSwitch()"></ion-toggle>
-  </ion-item>
-</ion-list>
-
 
 <ion-list *ngIf="hasSetPoint">
   <ion-item>
