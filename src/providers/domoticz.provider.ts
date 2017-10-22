@@ -22,18 +22,26 @@ export interface DomoticzSettingsModel {
 @Injectable()
 export class DomoticzProvider {
 
-    private settings: DomoticzSettingsModel;
+    private settings: DomoticzSettingsModel = {
+        server: '',             // IP adress
+        port: '',               // number as a string, with no colon ('8080')
+        protocol: '',           // https:// or http://
+        refreshdelay: 1
+    };
     private doRefresh: boolean = false;
     private domoticzItemStream: BehaviorSubject<Object> = new BehaviorSubject({});
     private domoticzStateStream: BehaviorSubject<Object> = new BehaviorSubject({});
 
     private domoticzState: Object = {};
+    private isInitialised: boolean = false;
 
     constructor(private http: Http) { };
 
     initDomoticzService(settings) {
         // check the settings
         this.settings = settings;
+
+        this.isInitialised = true;
 
         // start refreshing
         this.doRefresh = true;
@@ -50,9 +58,11 @@ export class DomoticzProvider {
     }
 
     refreshDomoticz() {
-        this.emitAllDevices();
-        this.emitAllPlans();
-        this.emitAllScenes();
+        if (this.isInitialised) {
+            this.emitAllDevices();
+            this.emitAllPlans();
+            this.emitAllScenes();
+        }
     }
 
 
@@ -77,6 +87,8 @@ export class DomoticzProvider {
     }
 
     private doHTTPForSubject(url: string, type: string) {
+
+
         this.http.get(url)
             .map(res => res.json())
             .mergeMap(res => res['result'])
@@ -148,7 +160,7 @@ export class DomoticzProvider {
     doneDomoticzService() {
         // stop pulling data
         this.doRefresh = false;
-
+        this.isInitialised = false;
         // and finish the streams
         this.domoticzItemStream.complete();
         this.domoticzStateStream.complete()
