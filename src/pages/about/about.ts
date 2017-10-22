@@ -20,7 +20,7 @@ export class AboutPage {
   }
 
   startObserving() {
-    this.state = JSON.stringify(this.domoticz.getSate(), null, 2);
+    this.state = JSON.stringify(this.domoticz.getState(), null, 2);
     this.domoticz.changeSettings(this.settings);
 
     this.storage.set('domoticzConfig', this.settings);
