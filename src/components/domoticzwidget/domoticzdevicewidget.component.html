@@ -9,7 +9,12 @@
   </ion-item>
 </ion-list>
 
-asdsadas<ion-toggle></ion-toggle>adsad
+
+<ion-list *ngIf="canToggle">
+  <ion-label>Pepperoni</ion-label>
+  <ion-toggle (ionChange)="toggleSwitch()"></ion-toggle>
+</ion-list>
+
 
 <ion-list *ngIf="hasSetPoint">
   <ion-item>
