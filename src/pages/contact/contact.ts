@@ -13,7 +13,7 @@ export class ContactPage {
   @ViewChild('gridPackery') gridPackery;
 
   draggies = [];
-  pckry:any;
+  pckry: any;
 
   constructor(public navCtrl: NavController) {
 
@@ -23,28 +23,23 @@ export class ContactPage {
     console.log('LOADED image');
     if (this.pckry) this.pckry.layout();
   }
- 
+
   ionViewDidEnter() {
 
-   // setTimeout(() => {
+    this.pckry = new Packery(this.gridPackery.nativeElement, {
+      itemSelector: ".grid-item",
+      gutter: 10,
+      columnWidth: 60
+    });
 
-      let elem = document.querySelector('.grid');
+    this.pckry.getItemElements().forEach(item => {
+      let draggie = new Draggabilly(item, { grid: [20, 20] });
+      this.pckry.bindDraggabillyEvents(draggie);
+      this.draggies.push(draggie);
 
-      this.pckry = new Packery(this.gridPackery.nativeElement, {
-        itemSelector: ".grid-item",
-        gutter: 10,
-        columnWidth: 60
-      });
-
-      this.pckry.getItemElements().forEach(item => {
-        let draggie = new Draggabilly(item, {grid: [ 20, 20 ]});
-        this.pckry.bindDraggabillyEvents(draggie);
-        this.draggies.push(draggie);
-
-        draggie.enable();
-        draggie.bindHandles();
-      })
-    //}, 100);
+      draggie.enable();
+      draggie.bindHandles();
+    })
   }
 
 }
