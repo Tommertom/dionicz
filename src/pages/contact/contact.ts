@@ -26,7 +26,7 @@ export class ContactPage {
  
   ionViewDidEnter() {
 
-    setTimeout(() => {
+   // setTimeout(() => {
 
       let elem = document.querySelector('.grid');
 
@@ -44,7 +44,7 @@ export class ContactPage {
         draggie.enable();
         draggie.bindHandles();
       })
-    }, 100);
+    //}, 100);
   }
 
 }
