@@ -39,12 +39,16 @@ export class HomePage {
 
     this.storage.remove('dashboardLayout');
 
+    console.log('In constructor home');
+
     // try to find a state, and if found, load it or create it
     this.storage.ready()
       .then(() => { return this.storage.get('dashboardLayout') })
       .then(value => {
 
-        if (value)
+        console.log('Storage get ', value)
+
+        if (value) {
           if (value['widgetList']) {
             console.log('Found dashboard', value);
             this.dashboardLayout = value;
@@ -57,43 +61,43 @@ export class HomePage {
                   let uid = data['_uid'];
                   this.dashboardLayout['domoticzState'][uid] = data;
                 })
-
-          } else {
-
-            console.log('Trying to find stuff');
-
-            // get initial state of domoticz widgets
-            let s = this.domoticz.getDomoticzPoller().subscribe((item) => {
-
-              console.log('FOUND item', item);
-
-              let uid = item['_uid'];
-              if (this.dashboardLayout['widgetList'].indexOf(uid) < 0) {
-
-                if (uid) {
-                  this.dashboardLayout['widgetList'].push(item['_uid'])
-                  this.dashboardLayout['domoticzState'][uid] = item;
-                } else console.log('RECEIVED UNDEFINED????', item);
-              }
-            })
-
-            // we will listen 5 seconds for widgets
-            setTimeout(() => {
-              console.log('SAVING dashboard', this.dashboardLayout)
-              s.unsubscribe();
-              this.storage.set('dashboardLayout', this.dashboardLayout);
-
-
-              this.domoticzSubscription =
-                this.domoticz.getDomoticzPoller()
-                  .subscribe(data => {
-                    //  console.log('RECEIVING STUFF2', data)
-                    let uid = data['_uid'];
-                    this.dashboardLayout['domoticzState'][uid] = data;
-                  })
-
-            }, 10000);
           }
+        } else {
+
+          console.log('Trying to find stuff');
+
+          // get initial state of domoticz widgets
+          let s = this.domoticz.getDomoticzPoller().subscribe((item) => {
+
+            console.log('FOUND item', item);
+
+            let uid = item['_uid'];
+            if (this.dashboardLayout['widgetList'].indexOf(uid) < 0) {
+
+              if (uid) {
+                this.dashboardLayout['widgetList'].push(item['_uid'])
+                this.dashboardLayout['domoticzState'][uid] = item;
+              } else console.log('RECEIVED UNDEFINED????', item);
+            }
+          })
+
+          // we will listen 5 seconds for widgets
+          setTimeout(() => {
+            console.log('SAVING dashboard', this.dashboardLayout)
+            s.unsubscribe();
+            this.storage.set('dashboardLayout', this.dashboardLayout);
+
+
+            this.domoticzSubscription =
+              this.domoticz.getDomoticzPoller()
+                .subscribe(data => {
+                  //  console.log('RECEIVING STUFF2', data)
+                  let uid = data['_uid'];
+                  this.dashboardLayout['domoticzState'][uid] = data;
+                })
+
+          }, 10000);
+        }
       })
   }
 
@@ -116,7 +120,7 @@ export class HomePage {
         draggie.bindHandles();
       })
 
-      console.log('SDAHSDKJSAHDJSH', this.pckry);
+      console.log('ionViewDidEnter pckry', this.pckry);
       /*
      this.items.map( function( item ) {
          return {

@@ -46,78 +46,20 @@ export class DomoticzProvider {
 
     private domoticzState: Object = {};
     private isInitialised: boolean = false;
-    private domoticzPoller: Observable<Object>;
+    //  private domoticzPoller: Observable<Object>;
 
     constructor(private http: Http) { };
 
     initDomoticzService(settings, state) {
 
-        function cleanToNumber(text) {
-            if (text) return text.replace(/[^\d.-]/g, '')
-            else return null;
-        }
+
 
         this.settings = settings;
         this.domoticzState = state;
         this.isInitialised = true;
 
-        this.domoticzPoller =
-            Observable
-                .timer(0, this.settings.refreshdelay)
-                //.interval(this.settings.refreshdelay)
-                .switchMap(() =>
-                    this.getDomoticzPoll('/json.htm?type=devices&used=true&order=Name', 'device')
-                        .filter(data => {
-                            let key = data['idx'] + data['_type'];
-                            let stateItem = this.domoticzState[key] || {};
-                            // if (data['LastUpdate'] != stateItem['LastUpdate'])
-                            //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
-                            return data['LastUpdate'] != stateItem['LastUpdate'];
-                        })
-                        .map(data => {
-                            // let's normalise the data received
-                            data['_devicetype'] = data['Type'] == 'General' ? data['SubType'] : data['Type'];
-                            data['_switched'] = (data['Data'] == 'On');
-                            data['_numbervalue'] = Number(cleanToNumber(data['Data']));
-                            data['_level'] = data['Level'];
-                            data['_setpoint'] = Number(data['SetPoint']);
-                            data['_counter'] = cleanToNumber(data['Counter']);
-                            data['_counterdeliv'] = cleanToNumber(data['CounterDeliv']);
-                            data['_counterdelivtoday'] = cleanToNumber(data['CounterDelivToday']);
-                            data['_usage'] = cleanToNumber(data['Usage'])
-                            data['_usagedeliv'] = cleanToNumber(data['UsageDeliv'])
+        //  this.domoticzPoller =
 
-                            return data;
-                        })
-                        .do(item => this.storeState(item, "device"))
-
-                        .concat(
-                        this.getDomoticzPoll('/json.htm?type=plans&order=name&used=true', 'plan')
-                            .filter(data => {
-                                let key = data['idx'] + data['_type'];
-                                let stateItem = this.domoticzState[key] || {};
-                                // if (data['LastUpdate'] != stateItem['LastUpdate'])
-                                //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
-                                return data['LastUpdate'] != stateItem['LastUpdate'];
-                            })
-                            .do(item => this.storeState(item, "plan"))
-                        )
-
-                        .concat(
-                        this.getDomoticzPoll('/json.htm?type=scenes', 'scene')
-                            .filter(data => {
-                                let key = data['idx'] + data['_type'];
-                                let stateItem = this.domoticzState[key] || {};
-                                // if (data['LastUpdate'] != stateItem['LastUpdate'])
-                                //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
-                                return data['LastUpdate'] != stateItem['LastUpdate'];
-                            })
-                            .do(item => this.storeState(item, "scene"))
-                        )
-
-                        .map(data => Object.assign(data, { _uid: data['idx'] + data['_type'] }))
-              //          .do(data => { console.log('SENDING STUFF', data, this.domoticzState) })
-                )
     }
 
     getSettings() {
@@ -153,7 +95,69 @@ export class DomoticzProvider {
     }
 
     getDomoticzPoller() {
-        return this.domoticzPoller;
+
+
+        function cleanToNumber(text) {
+            if (text) return text.replace(/[^\d.-]/g, '')
+            else return null;
+        }
+
+        return Observable
+            .timer(0, this.settings.refreshdelay)
+            //.interval(this.settings.refreshdelay)
+            .switchMap(() =>
+                this.getDomoticzPoll('/json.htm?type=devices&used=true&order=Name', 'device')
+                    .filter(data => {
+                        let key = data['idx'] + data['_type'];
+                        let stateItem = this.domoticzState[key] || {};
+                        // if (data['LastUpdate'] != stateItem['LastUpdate'])
+                        //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
+                        return data['LastUpdate'] != stateItem['LastUpdate'];
+                    })
+                    .map(data => {
+                        // let's normalise the data received
+                        data['_devicetype'] = data['Type'] == 'General' ? data['SubType'] : data['Type'];
+                        data['_switched'] = (data['Data'] == 'On');
+                        data['_numbervalue'] = Number(cleanToNumber(data['Data']));
+                        data['_level'] = data['Level'];
+                        data['_setpoint'] = Number(data['SetPoint']);
+                        data['_counter'] = cleanToNumber(data['Counter']);
+                        data['_counterdeliv'] = cleanToNumber(data['CounterDeliv']);
+                        data['_counterdelivtoday'] = cleanToNumber(data['CounterDelivToday']);
+                        data['_usage'] = cleanToNumber(data['Usage'])
+                        data['_usagedeliv'] = cleanToNumber(data['UsageDeliv'])
+
+                        return data;
+                    })
+                    .do(item => this.storeState(item, "device"))
+
+                    .concat(
+                    this.getDomoticzPoll('/json.htm?type=plans&order=name&used=true', 'plan')
+                        .filter(data => {
+                            let key = data['idx'] + data['_type'];
+                            let stateItem = this.domoticzState[key] || {};
+                            // if (data['LastUpdate'] != stateItem['LastUpdate'])
+                            //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
+                            return data['LastUpdate'] != stateItem['LastUpdate'];
+                        })
+                        .do(item => this.storeState(item, "plan"))
+                    )
+
+                    .concat(
+                    this.getDomoticzPoll('/json.htm?type=scenes', 'scene')
+                        .filter(data => {
+                            let key = data['idx'] + data['_type'];
+                            let stateItem = this.domoticzState[key] || {};
+                            // if (data['LastUpdate'] != stateItem['LastUpdate'])
+                            //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
+                            return data['LastUpdate'] != stateItem['LastUpdate'];
+                        })
+                        .do(item => this.storeState(item, "scene"))
+                    )
+
+                    .map(data => Object.assign(data, { _uid: data['idx'] + data['_type'] }))
+                    .do(data => { console.log('SENDING STUFF', data, this.domoticzState) })
+            )
     }
 
     storeState(item, type) {

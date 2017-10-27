@@ -24,5 +24,7 @@ export class AboutPage {
     this.domoticz.changeSettings(this.settings);
 
     this.storage.set('domoticzConfig', this.settings);
+
+    location.reload()
   }
 }

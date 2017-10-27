@@ -21,6 +21,7 @@ export class MyApp {
     private domoticz: DomoticzProvider,
     private storage: Storage
   ) {
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -28,12 +29,15 @@ export class MyApp {
       splashScreen.hide();
     });
 
-    this.domoticz.initDomoticzService({
-      server: '192.168.178.73',             // IP adress
-      port: '8080',              // number as a string, with no colon ('8080')
-      protocol: 'http://',           // https:// or http://
-      refreshdelay: '5000'       // the ms to wait before a full refresh
-    }, {});
+
+    /*
+        this.domoticz.initDomoticzService({
+          server: '192.168.178.73',             // IP adress
+          port: '8080',              // number as a string, with no colon ('8080')
+          protocol: 'http://',           // https:// or http://
+          refreshdelay: '5000'       // the ms to wait before a full refresh
+        }, {});
+      */
     /*
     
     this.domoticz.initDomoticzService({
@@ -51,38 +55,18 @@ export class MyApp {
         this.storage.get('domoticzConfig')
           .then((value) => {
 
+            console.log('Setting domoticz service', value)
 
-            // value can be null
-            if (value)
-              //  this.domoticz.initDomoticzService(value)
-              // lets default
-              //  else 
-              /*
-              this.domoticz.initDomoticzService({
-                server: 'localhost',             // IP adress
-                port: '8080',              // number as a string, with no colon ('8080')
-                protocol: 'http://',           // https:// or http://
-                refreshdelay: '5000'       // the ms to wait before a full refresh
-              }, {});
-
-*/
+            if (value) this.domoticz.initDomoticzService(value, {})
+            else
               this.domoticz.initDomoticzService({
                 server: '192.168.178.73',             // IP adress
                 port: '8080',              // number as a string, with no colon ('8080')
                 protocol: 'http://',           // https:// or http://
                 refreshdelay: '5000'       // the ms to wait before a full refresh
-              }, {});
-
-
-          })
-
-        //load last state
-        this.storage.get('lastState')
-          .then((value) => {
-            // value can be null
-            if (value)
-              this.lastState = value;
+              }, {})
           })
       })
   }
+
 }
