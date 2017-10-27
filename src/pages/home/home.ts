@@ -37,7 +37,7 @@ export class HomePage {
       domoticzState: {}
     }
 
-    //this.storage.remove('dashboardLayout');
+    this.storage.remove('dashboardLayout');
 
     // try to find a state, and if found, load it or create it
     this.storage.ready()
