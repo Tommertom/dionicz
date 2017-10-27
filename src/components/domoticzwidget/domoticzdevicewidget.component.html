@@ -1,8 +1,14 @@
+<ion-card>
+  <ion-card-header (click)="consoleWrite()">{{mystate?.Name}} - {{mystate?.idx}}
+    <ng-container *ngIf="mystate?.Favorite==1">FAVORITE</ng-container>
+  </ion-card-header>
+  <ion-card-content>
+
 <ion-list *ngIf="hasDimmer">
   <ion-item>
-    <ion-range (ionChange)="changeLevel(data['_level'])" min="0" max="payload['MaxDimlevel']" [(ngModel)]="data['_level']">
+    <ion-range (ionChange)="changeLevel(mystate['_level'])" min="0" max="mystate['MaxDimlevel']" [(ngModel)]="mystate['_level']">
       <ion-label range-left>0</ion-label>
-      <ion-label range-right>{{payload['MaxDimLevel']}}</ion-label>
+      <ion-label range-right>{{mystate['MaxDimLevel']}}</ion-label>
     </ion-range>
   </ion-item>
 </ion-list>
@@ -10,13 +16,13 @@
 <ion-list *ngIf="canToggle">
   <ion-item>
     <ion-label>Switch</ion-label>
-    <ion-toggle (ionChange)="toggleSwitch()" [checked]="payload.Data =='On'" [(ngModel)]="data._switched"></ion-toggle>
+    <ion-toggle (ionChange)="toggleSwitch()" [checked]="mystate.mystate =='On'" [(ngModel)]="mystate._switched"></ion-toggle>
   </ion-item>
 </ion-list>
 
 <ion-list *ngIf="hasSetPoint">
   <ion-item>
-    <ion-range (ionChange)="changeSetPoint(data['_setpoint'])" min="15" max="payload['MaxDimlevel']" [(ngModel)]="data['_setpoint']">
+    <ion-range (ionChange)="changeSetPoint(mystate['_setpoint'])" min="15" max="mystate['MaxDimlevel']" [(ngModel)]="mystate['_setpoint']">
       <ion-label range-left>15</ion-label>
       <ion-label range-right>32</ion-label>
     </ion-range>
@@ -24,44 +30,44 @@
 </ion-list>
 
 <br>
-<h1 *ngIf="showData">{{payload.Data}}</h1>
+<h1 *ngIf="showmystate">{{mystate.mystate}}</h1>
 
 <ion-grid *ngIf="isEnergy">
   <ion-row>
     <ion-col>Counter</ion-col>
-    <ion-col>{{data['_counter']}}</ion-col>
+    <ion-col>{{mystate['_counter']}}</ion-col>
   </ion-row>
   <ion-row>
     <ion-col>Count Delivery</ion-col>
-    <ion-col>{{data['_counterdeliv']}}</ion-col>
+    <ion-col>{{mystate['_counterdeliv']}}</ion-col>
   </ion-row>
   <ion-row>
     <ion-col>Count Delivery Today</ion-col>
-    <ion-col>{{data['_counterdelivtoday']}}</ion-col>
+    <ion-col>{{mystate['_counterdelivtoday']}}</ion-col>
   </ion-row>
   <ion-row>
     <ion-col>Usage</ion-col>
-    <ion-col>{{data['_usage']}}</ion-col>
+    <ion-col>{{mystate['_usage']}}</ion-col>
   </ion-row>
   <ion-row>
     <ion-col>Usage Deliv</ion-col>
-    <ion-col>{{data['_usagedeliv']}}</ion-col>
+    <ion-col>{{mystate['_usagedeliv']}}</ion-col>
   </ion-row>
 </ion-grid>
 
 <span *ngIf="isTempHumBaro">
- Baro:  {{payload['Barometer']}}hPa<br>
- DewPoint: {{payload['DewPoint']}}<br>
- Forecast: {{payload['Forecast']}}<br>
- Forecast: {{payload['ForecastStr']}}<br>
- Humidity: {{payload['Humidity']}}%<br>
- Humidity: {{payload['HumidityStatus']}}<br>
- Temp: {{payload['Temp']}}C<br> 
+ Baro:  {{mystate['Barometer']}}hPa<br>
+ DewPoint: {{mystate['DewPoint']}}<br>
+ Forecast: {{mystate['Forecast']}}<br>
+ Forecast: {{mystate['ForecastStr']}}<br>
+ Humidity: {{mystate['Humidity']}}%<br>
+ Humidity: {{mystate['HumidityStatus']}}<br>
+ Temp: {{mystate['Temp']}}C<br> 
 </span>
 
 <span *ngIf="isWindPower">
- Usage: {{payload['Usage']}}<br>
- Counter today: {{payload['CounterToday']}}<br> 
+ Usage: {{mystate['Usage']}}<br>
+ Counter today: {{mystate['CounterToday']}}<br> 
 </span>
 
 <ion-grid *ngIf="hasColorPicker">
@@ -203,9 +209,12 @@
 </ion-grid>
 <ion-list *ngIf="hasColorPicker">
   <ion-item>
-    <ion-range (ionChange)="changeBrigthnessLevel(data['_brightnesslevel'])" min="0" max="100" [(ngModel)]="data['_brightnesslevel']">
+    <ion-range (ionChange)="changeBrigthnessLevel(mystate['_brightnesslevel'])" min="0" max="100" [(ngModel)]="mystate['_brightnesslevel']">
       <ion-icon small range-left name="sunny"></ion-icon>
       <ion-icon range-right name="sunny"></ion-icon>
     </ion-range>
   </ion-item>
 </ion-list>
+
+  </ion-card-content>
+</ion-card>

@@ -17,6 +17,10 @@ import 'rxjs/add/operator/do';
 //import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/concat';
 import 'rxjs/add/operator/switchMap';
+//import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/observable/timer';
+
 //import 'rxjs/add/operator/interval';
 
 import 'rxjs/add/observable/interval';
@@ -42,12 +46,78 @@ export class DomoticzProvider {
 
     private domoticzState: Object = {};
     private isInitialised: boolean = false;
+    private domoticzPoller: Observable<Object>;
 
     constructor(private http: Http) { };
 
-    initDomoticzService(settings) {
+    initDomoticzService(settings, state) {
+
+        function cleanToNumber(text) {
+            if (text) return text.replace(/[^\d.-]/g, '')
+            else return null;
+        }
+
         this.settings = settings;
+        this.domoticzState = state;
         this.isInitialised = true;
+
+        this.domoticzPoller =
+            Observable
+                .timer(0, this.settings.refreshdelay)
+                //.interval(this.settings.refreshdelay)
+                .switchMap(() =>
+                    this.getDomoticzPoll('/json.htm?type=devices&used=true&order=Name', 'device')
+                        .filter(data => {
+                            let key = data['idx'] + data['_type'];
+                            let stateItem = this.domoticzState[key] || {};
+                            // if (data['LastUpdate'] != stateItem['LastUpdate'])
+                            //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
+                            return data['LastUpdate'] != stateItem['LastUpdate'];
+                        })
+                        .map(data => {
+                            // let's normalise the data received
+                            data['_devicetype'] = data['Type'] == 'General' ? data['SubType'] : data['Type'];
+                            data['_switched'] = (data['Data'] == 'On');
+                            data['_numbervalue'] = Number(cleanToNumber(data['Data']));
+                            data['_level'] = data['Level'];
+                            data['_setpoint'] = Number(data['SetPoint']);
+                            data['_counter'] = cleanToNumber(data['Counter']);
+                            data['_counterdeliv'] = cleanToNumber(data['CounterDeliv']);
+                            data['_counterdelivtoday'] = cleanToNumber(data['CounterDelivToday']);
+                            data['_usage'] = cleanToNumber(data['Usage'])
+                            data['_usagedeliv'] = cleanToNumber(data['UsageDeliv'])
+
+                            return data;
+                        })
+                        .do(item => this.storeState(item, "device"))
+
+                        .concat(
+                        this.getDomoticzPoll('/json.htm?type=plans&order=name&used=true', 'plan')
+                            .filter(data => {
+                                let key = data['idx'] + data['_type'];
+                                let stateItem = this.domoticzState[key] || {};
+                                // if (data['LastUpdate'] != stateItem['LastUpdate'])
+                                //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
+                                return data['LastUpdate'] != stateItem['LastUpdate'];
+                            })
+                            .do(item => this.storeState(item, "plan"))
+                        )
+
+                        .concat(
+                        this.getDomoticzPoll('/json.htm?type=scenes', 'scene')
+                            .filter(data => {
+                                let key = data['idx'] + data['_type'];
+                                let stateItem = this.domoticzState[key] || {};
+                                // if (data['LastUpdate'] != stateItem['LastUpdate'])
+                                //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
+                                return data['LastUpdate'] != stateItem['LastUpdate'];
+                            })
+                            .do(item => this.storeState(item, "scene"))
+                        )
+
+                        .map(data => Object.assign(data, { _uid: data['idx'] + data['_type'] }))
+              //          .do(data => { console.log('SENDING STUFF', data, this.domoticzState) })
+                )
     }
 
     getSettings() {
@@ -62,64 +132,33 @@ export class DomoticzProvider {
         return this.http.get(this.settings.protocol +
             this.settings.server + ':' +
             this.settings.port + url)
+            //  .do(c=>{console.log('s1 ',c)})
             .timeout(3000)
+            //.do(c=>{console.log('s2 ',c)})
             .filter(input => { return (input.ok && (input.status == 200)) })
+            //  .do(c=>{console.log('s3 ',c)})
             .map((data) => data.json())
+            // .do(c=>{console.log('s4 ',c)})
             .filter(data => data['status'] == 'OK')
+            //  .do(c=>{console.log('s5 ',c)})
+            .filter(data => data['result'])
             .map(data => data['result'])
+            //  .do(c=>{console.log('s6 ',c)})
             .mergeAll()
+            //   .do(c=>{console.log('s7 ',c)})
+            //.filter(data=> {return (data[''])})
+            //.do(c=>{console.log('s8 ',c)})
             .map(data => Object.assign(data, { _type: category }))
+        //  .do(c=>{console.log('s9 ',c)})
     }
 
     getDomoticzPoller() {
-
-        function cleanToNumber(text) {
-            if (text) return text.replace(/[^\d.-]/g, '')
-            else return null;
-        }
-
-        return Observable
-            .interval(this.settings.refreshdelay)
-            //            .filter(_ => this.settings.server != "")
-            .switchMap(() =>
-                this.getDomoticzPoll('/json.htm?type=devices&used=true&order=Name', 'device')
-                    .map(data => {
-                        // let's normalise the data received
-                        data['_devicetype'] = data['Type'] == 'General' ? data['SubType'] : data['Type'];
-                        data['_switched'] = (data['Data'] == 'On');
-                        data['_numbervalue'] = Number(cleanToNumber(data['Data']));
-                        data['_level'] = data['Level'];
-                        data['_setpoint'] = Number(data['SetPoint']);
-                        data['_counter'] = cleanToNumber(data['Counter']);
-                        data['_counterdeliv'] = cleanToNumber(data['CounterDeliv']);
-                        data['_counterdelivtoday'] = cleanToNumber(data['CounterDelivToday']);
-                        data['_usage'] = cleanToNumber(data['Usage'])
-                        data['_usagedeliv'] = cleanToNumber(data['UsageDeliv'])
-
-                        return data;
-                    })
-                    .do(item => this.storeState(item, "device"))
-
-                    .concat(
-                    this.getDomoticzPoll('/json.htm?type=plans&order=name&used=true', 'plan')
-                        .do(item => this.storeState(item, "plan"))
-                    )
-
-                    .concat(
-                    this.getDomoticzPoll('/json.htm?type=scenes', 'scene')
-                        .do(item => this.storeState(item, "scene"))
-                    )
-            )
+        return this.domoticzPoller;
     }
 
     storeState(item, type) {
-
-        // taken from the internet, somewhere
-        function hashCode(txt) {
-            return txt.split("").reduce(function (a, b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0);
-        }
-
-        let hash = hashCode(item['idx'] + type);
+        //   let hash = hashCode(item['idx'] + type);
+        let hash = item['idx'] + type;
         this.domoticzState[hash] = Object.assign({ _type: type }, item);
     }
 
@@ -137,34 +176,22 @@ export class DomoticzProvider {
        * 
        */
     toggleDevice(idx: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=Toggle',
             { '[IDX]': idx })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
     setColorBrightnessHUE(idx: string, hue: number, brightness: number) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=setcolbrightnessvalue&idx=[IDX]&hue=[HUE]&brightness=[BRIGHT]&iswhite=false',
             { '[IDX]': idx, '[BRIGHT]': brightness, '[HUE]': hue })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
 
     setColorBrightnessHEX(idx: string, hex: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=setcolbrightnessvalue&idx=[IDX]&hex=[HEX]&brightness=100&iswhite=false',
             { '[IDX]': idx, '[HEX]': hex })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
 
@@ -174,13 +201,9 @@ export class DomoticzProvider {
        * 
        */
     setDeviceDimLevel(idx: string, level: number) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=Set%20Level&level=[LEVEL]',
             { '[IDX]': idx, '[LEVEL]': level })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
 
@@ -189,13 +212,9 @@ export class DomoticzProvider {
        * 
        */
     setDeviceSetPoint(idx: string, setpoint: number) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=setsetpoint&idx=[IDX]&setpoint=[SETPOINT]',
             { '[IDX]': idx, '[SETPOINT]': setpoint })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
     /**
@@ -203,13 +222,10 @@ export class DomoticzProvider {
        * 
        */
     switchDeviceOn(idx: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=On',
             { '[IDX]': idx })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
+
     }
 
     /**
@@ -217,13 +233,9 @@ export class DomoticzProvider {
        * 
        */
     switchDeviceOff(idx: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=Off',
             { '[IDX]': idx })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
     /**
@@ -231,13 +243,9 @@ export class DomoticzProvider {
        * 
        */
     switchSceneOn(idx: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=switchscene&idx=[IDX]&switchcmd=On',
             { '[IDX]': idx })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
     /**
@@ -245,13 +253,9 @@ export class DomoticzProvider {
        * 
        */
     switchSceneOff(idx: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=switchscene&idx=[IDX]&switchcmd=Off',
             { '[IDX]': idx })
-            .subscribe(
-            () => { },
-            () => { },
-            () => { });
     }
 
     /**
@@ -259,7 +263,7 @@ export class DomoticzProvider {
        * 
        */
     addLog(message: string) {
-        this.callAPI(
+        return this.callAPI(
             '/json.htm?type=command&param=addlogmessage&message=[MESSAGE]',
             { '[MESSAGE]': message });
     }
@@ -282,6 +286,7 @@ export class DomoticzProvider {
             this.settings.server + ':' +
             this.settings.port + api)
             .timeout(3000)
+            .toPromise()
     }
 }
 

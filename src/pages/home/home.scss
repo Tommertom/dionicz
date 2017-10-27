@@ -1,3 +1,8 @@
 page-home {
-
+  .grid-item {
+    float: left;
+    width: 400px; // height: 100px;
+    background: #C09;
+    border: 2px solid hsla(0, 0%, 0%, 0.5);
+  }
 }

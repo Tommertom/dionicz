@@ -1,12 +1,17 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title (click)="showStuff()" >Home</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <h2>Welcome to Ionic!</h2>
-  <span >
-    <domoticz-widget *ngFor="let i of widgetList" [payload]="domoticzState[i]"></domoticz-widget>
+  <span #gridPackery class="grid" >
+    <ng-container *ngFor="let i of dashboardLayout.widgetList" >
+    <domoticz-widget class="grid-item" id="{{i}}" [state]="dashboardLayout['domoticzState'][i]"></domoticz-widget>
+    </ng-container>
   </span>
+
+  <button (click)="setPosition()">SLKDJKASKDHASKDSJD</button>
 </ion-content>
+

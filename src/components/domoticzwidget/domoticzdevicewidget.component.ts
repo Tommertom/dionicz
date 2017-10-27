@@ -1,20 +1,19 @@
+import { Observable } from 'rxjs/Observable';
 import { NavParams, ViewController } from 'ionic-angular';
-import { Input, Component } from '@angular/core';
+import { Input, Component, OnChanges, SimpleChanges } from '@angular/core';
 
 import { WidgetComponent } from './../widget/widget.component';
 import { DomoticzProvider } from './../../providers/domoticz.provider';
 
 @Component({
     selector: 'domoticz-device-widget',
-    templateUrl: 'domoticzdevicewidget.component.html',
-
+    templateUrl: 'domoticzdevicewidget.component.html'
 })
 export class DomitczDeviceWidgetComponent { //extends WidgetComponent
 
-    @Input() payload: Object;
-    // raw: string = "";
+    @Input() state: Object;
 
-    data: Object = {};
+    mystate: Object;
 
     canToggle: boolean = false;
     hasDimmer: boolean = false;
@@ -25,24 +24,31 @@ export class DomitczDeviceWidgetComponent { //extends WidgetComponent
     isTempHumBaro: boolean = false;
     isWindPower: boolean = false;
 
+    inDomoticzAction: boolean = false;
+
     constructor(private domoticz: DomoticzProvider) { }
 
-    ngAfterContentInit() {
+    ngOnChanges(changes: SimpleChanges) {
+        if (!this.inDomoticzAction) {
+            if (changes['state']) {
+                this.mystate = changes['state']['currentValue'];
+                this.setUICapabilities(this.mystate);
+            }
+        }
+    }
 
-        this.data = Object.assign({}, this.payload);
-
+    setUICapabilities(state) {
         // and configure the UI elements
         this.canToggle =
-            (this.payload['Type'] == 'Lighting Limitless/Applamp') ||
-            (this.payload['SwitchType'] == 'On/Off');
+            (state['Type'] == 'Lighting Limitless/Applamp') ||
+            (state['SwitchType'] == 'On/Off');
 
-
-        this.isWindPower = (this.payload['SubType'] == 'kWh') && (this.payload['Usage']) && (this.payload['CounterToday'])
-        this.hasDimmer = (this.payload['HaveDimmer'] == true) && (this.payload['SubType'] != 'AC')
-        this.hasColorPicker = (this.payload['SubType'] == 'RGB');
-        this.hasSetPoint = (this.payload['SubType'] == 'SetPoint')
-        this.isEnergy = this.payload['Type'] == 'P1 Smart Meter';
-        this.isTempHumBaro = this.payload['Type'] == 'Temp + Humidity + Baro';
+        this.isWindPower = (state['SubType'] == 'kWh') && (state['Usage']) && (state['CounterToday'])
+        this.hasDimmer = (state['SubType'] != 'AC') //(state['HaveDimmer'] == true) &&
+        this.hasColorPicker = (state['SubType'] == 'RGB');
+        this.hasSetPoint = (state['SubType'] == 'SetPoint')
+        this.isEnergy = state['Type'] == 'P1 Smart Meter';
+        this.isTempHumBaro = state['Type'] == 'Temp + Humidity + Baro';
 
         this.showData = (this.canToggle == false) &&
             (this.hasDimmer == false) &&
@@ -52,25 +58,45 @@ export class DomitczDeviceWidgetComponent { //extends WidgetComponent
             (this.isEnergy == false);
     }
 
+    ngAfterContentInit() {
+       // console.log('DomitczDeviceWidgetComponent ngAfterContentInit', this.mystate)
+        this.mystate = this.state;
+        this.setUICapabilities(this.mystate);
+    }
+
     toggleSwitch() {
-        if (this.data['_switched'])
-            this.domoticz.switchDeviceOn(this.payload['idx'])
-        else this.domoticz.switchDeviceOff(this.payload['idx'])
+        this.inDomoticzAction = true;
+
+        if (this.mystate['_switched'])
+            this.domoticz.switchDeviceOn(this.mystate['idx'])
+                .then(_ => { this.inDomoticzAction = false })
+
+        else this.domoticz.switchDeviceOff(this.mystate['idx'])
+            .then(_ => { this.inDomoticzAction = false })
     }
 
     changeLevel(level) {
-        //     this.domoticz.setDeviceDimLevel(this.payload['idx'], this.data['_level']);
+        //     this.domoticz.setDeviceDimLevel(this.mystate['idx'], this.data['_level']);
     }
 
     setColor(color) {
-        this.domoticz.setColorBrightnessHEX(this.payload['idx'], color);
+        this.inDomoticzAction = true;
+        this.domoticz.setColorBrightnessHEX(this.mystate['idx'], color)
+            .then(_ => { this.inDomoticzAction = false })
+
     }
 
     changeSetPoint(level) {
-        this.domoticz.setDeviceSetPoint(this.payload['idx'], level);
+        this.inDomoticzAction = true;
+        this.domoticz.setDeviceSetPoint(this.mystate['idx'], level)
+            .then(_ => { this.inDomoticzAction = false })
     }
 
     changeBrigthnessLevel(level) {
 
+    }
+
+    consoleWrite() {
+        console.log('STATE', this.mystate);
     }
 }
