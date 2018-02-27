@@ -1,8 +1,16 @@
 <ng-container [ngSwitch]="itemtype">
-  <ng-container *ngSwitchCase="'plan'">A plan</ng-container>
+  <ng-container *ngSwitchCase="'plan'">
+    <ion-card>
+      <br>A plan <br>
+    </ion-card>
+  </ng-container>
   <ng-container *ngSwitchCase="'device'">
     <domoticz-device-widget [state]="state"> </domoticz-device-widget>
   </ng-container>
-  <ng-container *ngSwitchCase="'scene'">A scene</ng-container>
-  <ng-container *ngSwitchDefault>THIS SHOULD NOT HAPPEN {{payload?._type}}</ng-container>
+  <ng-container *ngSwitchCase="'scene'">
+    <ion-card>
+      <br>A scene<br>
+    </ion-card>
+  </ng-container>
+  <ng-container *ngSwitchDefault>THIS SHOULD NOT HAPPEN widget </ng-container>
 </ng-container>

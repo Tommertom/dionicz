@@ -1,0 +1,1340 @@
+[{
+    "feedlabel": "NewZeeTutorial",
+    "prettylabel": "NewZee Tutorial",
+    "feedurl": "assets/tutorial.xml",
+    "tags": "tutorial",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Dummydata",
+    "prettylabel": "Dummy Data",
+    "feedurl": "assets/dummydata.xml",
+    "tags": "test",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/capgemini.png"
+  },
+  {
+    "feedlabel": "dgMarket",
+    "prettylabel": "dgMarket",
+    "feedurl": "https://www.dgmarket.com/tenders/RssFeedAction.do?locationISO=_s%2c_p%2c_c%2c_l%2c_m%2c_a&keywords=&sub=66100000&noticeType=&language=&buyerId=",
+    "tags": "tender",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+ {
+    "feedlabel": "ITNewsAfrica",
+    "prettylabel": "IT News Africa",
+    "feedurl": "http://feeds.feedburner.com/itnewsafrica?format=xml",
+    "tags": "tech africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+ {
+    "feedlabel": "HowWeMadeItInAfrica",
+    "prettylabel": "How We Made It In Africa",
+    "feedurl": "http://feeds.feedburner.com/HowWeMadeItInAfrica?format=xml",
+    "tags": "tech africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  
+  {
+    "feedlabel": "CoinTelegraph",
+    "prettylabel": "Coin Telegraph",
+    "feedurl": "https://cointelegraph.com/rss",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+
+  {
+    "feedlabel": "ElPaisTech",
+    "prettylabel": "El Pais Tech",
+    "feedurl": "http://ep00.epimg.net/rss/tecnologia/portada.xml",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+
+
+  {
+    "feedlabel": "Finnovista",
+    "prettylabel": "Finnovista",
+    "feedurl": "http://www.finnovista.com/feed/",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+ {
+    "feedlabel": "Lifehacker",
+    "prettylabel": "Lifehacker",
+    "feedurl": "http://lifehacker.com/rss",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+ 
+
+ {
+    "feedlabel": "GIZmodo",
+    "prettylabel": "GIZmodo",
+    "feedurl": "http://gizmodo.com/rss",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+ 
+  {
+    "feedlabel": "DailyMonitor",
+    "prettylabel": "dailymonitor",
+    "feedurl": "http://www.monitor.co.ug/Business/688322-688322-view-asFeed-ey54eez/index.xml",
+    "tags": "uganda",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+
+  {
+    "feedlabel": "Pymnts",
+    "prettylabel": "Pymnts",
+    "feedurl": "http://www.pymnts.com/feed/",
+    "tags": "payments",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "Paymentsnews.com",
+    "prettylabel": "PaymentsNews.com",
+    "feedurl": "http://feedproxy.google.com/PaymentsNews",
+    "tags": "payments",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "mobilepaymentstoday.com",
+    "prettylabel": "MobilePaymentsToday.com",
+    "feedurl": "https://www.mobilepaymentstoday.com/rss",
+    "tags": "payments",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "informationweek.com",
+    "prettylabel": "Information Week.com",
+    "feedurl": "http://www.informationweek.com/rss_simple.asp",
+    "tags": "digital",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "thepaypers",
+    "prettylabel": "The Paypers",
+    "feedurl": "http://www.thepaypers.com/syndication",
+    "tags": "payments",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "BusinessDailyAfrica",
+    "prettylabel": "Business Daily Africa",
+    "feedurl": "  http://www.businessdailyafrica.com/latestrss.rss",
+    "tags": "africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bd.jpg"
+  },
+
+  {
+    "feedlabel": "Bright",
+    "prettylabel": "Bright",
+    "feedurl": "http://feeds.bright.nl/brightmagazine?format=xml",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bright.jpg"
+  },
+
+  {
+    "feedlabel": "TheVergeAndroid",
+    "prettylabel": "The Verge Android",
+    "feedurl": "http://www.theverge.com/android/rss/index.xml",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "entry",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Tweakers Mixed",
+    "prettylabel": "Tweakers Mixed",
+    "feedurl": "http://feeds.feedburner.com/tweakers/mixed",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/tweakers.png"
+  },
+  {
+    "feedlabel": "Rabobank FAR",
+    "prettylabel": "Rabobank FAR",
+    "feedurl": "https://research.rabobank.com/far/en/rss/rss-all-sectors.html",
+    "tags": "opinion business",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "Disrupt Africa",
+    "prettylabel": "Disrupt Africa",
+    "feedurl": "http://disrupt-africa.com/feed/",
+    "tags": "fintech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Technofoliance",
+    "prettylabel": "Technofoliance",
+    "feedurl": "http://techfoliance.com/feed/",
+    "tags": "fintech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+
+
+  {
+    "feedlabel": "Twitter Cyprus Mail",
+    "prettylabel": "Twitter Cyprus Mail",
+    "feedurl": "https://queryfeed.net/tw?q=%40cyprusmail",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  
+  {
+    "feedlabel": "Twitter PKawumi",
+    "prettylabel": "Twitter PKawumi",
+    "feedurl": "https://queryfeed.net/tw?q=%40pkawumi",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  
+
+ 
+
+  
+
+  {
+    "feedlabel": "Twitter Geek.com",
+    "prettylabel": "Twitter Geek.com",
+    "feedurl": "https://queryfeed.net/tw?q=%40geekdotcom",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  
+
+  {
+    "feedlabel": "Twitter GTNews",
+    "prettylabel": "Twitter GTNews",
+    "feedurl": "https://queryfeed.net/tw?q=%40gtnewsdotcom",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  
+  {
+    "feedlabel": "Twitter UNCDFMM4P",
+    "prettylabel": "Twitter UNCDFMM4P",
+    "feedurl": "https://queryfeed.net/tw?q=%40UNCDFMM4P",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/UNCDFMM4P.jpg"
+  },
+  {
+    "feedlabel": "Twitter FSD Uganda",
+    "prettylabel": "Twitter FSD Uganda",
+    "feedurl": "https://queryfeed.net/tw?q=%40FSDUganda",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "Twitter FSD Zambia",
+    "prettylabel": "Twitter FSD Zambia",
+    "feedurl": "https://queryfeed.net/tw?q=%40FSDZambia",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  
+  {
+    "feedlabel": "Twitter CGAP",
+    "prettylabel": "Twitter CGAP",
+    "feedurl": "https://queryfeed.net/tw?q=%40CGAP",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Twitter MicroSave",
+    "prettylabel": "Twitter MicroSave",
+    "feedurl": "https://queryfeed.net/tw?q=%40MicroSave",
+    "tags": "twitter",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Guru8",
+    "prettylabel": "Guru8",
+    "feedurl": "https://guru8.net/feed/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "BGR",
+    "prettylabel": "BGR",
+    "feedurl": "http://feeds.feedburner.com/TheBoyGeniusReport?format=xml",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "CFI.co",
+    "prettylabel": "CFI.co",
+    "feedurl": "http://cfi.co/feed/",
+    "tags": "banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "BankingTech tag fintech",
+    "prettylabel": "Banking Technology Fintech Tag",
+    "feedurl": "http://www.bankingtech.com/tag/fintech/feed/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "BankingTech latestresources",
+    "prettylabel": "Banking Technology Latest Resources",
+    "feedurl": "http://www.bankingtech.com/category/format/latest-resources/feed/ ",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "BankingTech news",
+    "prettylabel": "Banking Technology News",
+    "feedurl": "http://www.bankingtech.com/category/format/news/feed/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "BankingTech LATAM",
+    "prettylabel": "Banking Technology Latin America",
+    "feedurl": "http://www.bankingtech.com/category/topic/region/latin-america/feed/",
+    "tags": "fintech tech latin",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Fintech Hong Kong",
+    "prettylabel": "Fintech Hong Kong",
+    "feedurl": "http://fintechnews.hk/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Fintech Singapore",
+    "prettylabel": "Fintech Singapore",
+    "feedurl": "http://fintechnews.sg/feed/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "FiAsia",
+    "prettylabel": "finews.asia",
+    "feedurl": "http://www.finews.asia/?format=feed&type=rss",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "FrankWachting",
+    "prettylabel": "FrankWatching",
+    "feedurl": "http://feeds2.feedburner.com/frankwatching/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "BNR",
+    "prettylabel": "BNR",
+    "feedurl": "https://www.bnr.nl/?rss",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/BNR.jpg"
+  },
+  {
+    "feedlabel": "SiliconCanals",
+    "prettylabel": "SiliconCanals",
+    "feedurl": "http://feeds.feedburner.com/SiliconCanals?format=xml",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/sc.png"
+  },
+  {
+    "feedlabel": "SiliconCanals Curated",
+    "prettylabel": "SiliconCanals Curated",
+    "feedurl": "http://feeds.feedburner.com/curated/siliconcanals?format=xml",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Startupdates",
+    "prettylabel": "Startupdates",
+    "feedurl": "https://startupdates.nl/feed/",
+    "tags": "fintech tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/startupdates.jpg"
+  },
+  {
+    "feedlabel": "McKinsey Insights",
+    "prettylabel": "McKinsey Insights",
+    "feedurl": "http://www.mckinsey.com/Insights/rss.aspx",
+    "tags": "opinion business",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Instagram nlyozz",
+    "prettylabel": "Instagram nlyozz",
+    "feedurl": "https://queryfeed.net/instagram?q=nlyozz",
+    "tags": "instagram",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Ars Technica",
+    "prettylabel": "Ars Technica",
+    "feedurl": "http://arstechnica.com/index.rssx",
+    "tags": "tech news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Cap Gemini Latest Resources",
+    "prettylabel": "Cap Gemini Latest Resources",
+    "feedurl": "https://www.capgemini.com/rss.php/name/resources",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/capgemini.png"
+  },
+  
+
+  {
+    "feedlabel": "Cap Gemini CTO blog",
+    "prettylabel": "Cap Gemini CTO blog",
+    "feedurl": "https://www.capgemini.com/blog/261646/feed",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/capgemini.png"
+  },
+  {
+    "feedlabel": "MTN Tech Blog",
+    "prettylabel": "MTN Tech Blog",
+    "feedurl": "http://blog.mtn.com.cy/feed_en",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NY Times Africa",
+    "prettylabel": "NY Times Africa",
+    "feedurl": "http://rss.nytimes.com/services/xml/rss/nyt/Africa.xml",
+    "tags": "africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NY Times Europe",
+    "prettylabel": "NY Times Europe",
+    "feedurl": "http://rss.nytimes.com/services/xml/rss/nyt/Europe.xml",
+    "tags": "europe",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NY Times HomePage",
+    "prettylabel": "NY Times HomePage",
+    "feedurl": "http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NY Times Technology",
+    "prettylabel": "NY Times Technology",
+    "feedurl": "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Makezine",
+    "prettylabel": "Makezine",
+    "feedurl": "http://makezine.com/feed/",
+    "tags": "gossip",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+
+  {
+    "feedlabel": "Economist Science - Technology",
+    "prettylabel": "Economist Science - Technology",
+    "feedurl": "http://www.economist.com/sections/science-technology/rss.xml",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/economist.png"
+  },
+  {
+    "feedlabel": "Economist Banking",
+    "prettylabel": "Economist Banking",
+    "feedurl": "http://www.economist.com/topics/banking/index.xml",
+    "tags": "business banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/economist.png"
+  },
+  {
+    "feedlabel": "TED talks",
+    "prettylabel": "TED talks",
+    "feedurl": "http://www.ted.com/talks/rss",
+    "tags": "opinion",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NRC",
+    "prettylabel": "NRC",
+    "feedurl": "https://www.nrc.nl/rss/",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Financial Times Europe",
+    "prettylabel": "Financial Times Europe",
+    "feedurl": "http://www.ft.com/rss/home/europe",
+    "tags": "business europe",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/ft.png"
+  },
+  {
+    "feedlabel": "Engadget",
+    "prettylabel": "Engadget",
+    "feedurl": "https://www.engadget.com/rss.xml",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "DigitalTrends",
+    "prettylabel": "DigitalTrends",
+    "feedurl": "http://www.digitaltrends.com/feed/",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "AppsAfrica",
+    "prettylabel": "AppsAfrica",
+    "feedurl": "http://feeds.feedburner.com/Appsafrica",
+    "tags": "tech africa fintech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Dezeen",
+    "prettylabel": "Dezeen",
+    "feedurl": "http://feeds.feedburner.com/dezeen?format=xml",
+    "tags": "design",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Telecom Paper",
+    "prettylabel": "Telecom Paper",
+    "feedurl": "http://feeds.feedburner.com/telecompaper/uLYl?format=xml",
+    "tags": "tech telecom news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/telecompaper.gif"
+  },
+  {
+    "feedlabel": "Lusaka Times",
+    "prettylabel": "Lusaka Times",
+    "feedurl": "https://www.lusakatimes.com/feed/",
+    "tags": "africa zambia",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/LT.png"
+  },
+  {
+    "feedlabel": "Emerce",
+    "prettylabel": "Emerce",
+    "feedurl": "http://www.emerce.nl/nieuws/feed",
+    "tags": "fintech ecommerce",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Mobile Payments Today",
+    "prettylabel": "Mobile Payments Today",
+    "feedurl": "https://www.mobilepaymentstoday.com/rss/",
+    "tags": "payments fintech banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Bank Systems and Technology",
+    "prettylabel": "Bank Systems and Technology",
+    "feedurl": "http://www.banktech.com/rss_simple.asp",
+    "tags": "banking tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Let us talk payments",
+    "prettylabel": "Let us talk payments",
+    "feedurl": "https://letstalkpayments.com/feed/",
+    "tags": "payments fintech banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/ltp.jpeg"
+  },
+  {
+    "feedlabel": "The Finanser",
+    "prettylabel": "The Finanser",
+    "feedurl": "http://thefinanser.com/feed/",
+    "tags": "payments fintech banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/finanser.png"
+  },
+  {
+    "feedlabel": "iCulture",
+    "prettylabel": "iCulture",
+    "feedurl": "http://feedpress.me/iculture?format=xml",
+    "tags": "tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "American Banker",
+    "prettylabel": "American Banker",
+    "feedurl": "https://www.americanbanker.com/feed?rss=true",
+    "tags": "banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/americanbanker.png"
+  },
+  {
+    "feedlabel": "Reuters TOP Africa",
+    "prettylabel": "Reuters TOP Africa",
+    "feedurl": "http://feeds.reuters.com/reuters/AFRICATopNews?format=xml",
+    "tags": "africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "Reuters Uganda News",
+    "prettylabel": "Reuters Uganda News",
+    "feedurl": "http://feeds.reuters.com/reuters/AfricaUgandaNews?format=xml",
+    "tags": "africa uganda",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "Reuters Zambia News",
+    "prettylabel": "Reuters Zambia News",
+    "feedurl": "http://feeds.reuters.com/reuters/AfricaZambiaNews?format=xml",
+    "tags": "africa zambia",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "Reuters Africa Business",
+    "prettylabel": "Reuters Africa Business",
+    "feedurl": "http://feeds.reuters.com/reuters/AFRICAbusinessNews?format=xml",
+    "tags": "africa business",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "Reuters Africa Oddly",
+    "prettylabel": "Reuters Africa Oddly",
+    "feedurl": "http://feeds.reuters.com/reuters/AFRICAOddlyenoughNews?format=xml",
+    "tags": "africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "BizTech Africa",
+    "prettylabel": "BizTech Africa",
+    "feedurl": "http://www.biztechafrica.com/feed/rss/",
+    "tags": "africa tech business",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "All Africa Headlines",
+    "prettylabel": "All Africa Headlines",
+    "feedurl": "http://allafrica.com/tools/headlines/rdf/latest/headlines.rdf",
+    "tags": "africa",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/allafrica.png"
+  },
+  {
+    "feedlabel": "All Africa Banking",
+    "prettylabel": "All Africa Banking",
+    "feedurl": "http://allafrica.com/tools/headlines/rdf/banking/headlines.rdf",
+    "tags": "africa banking",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/allafrica.png"
+  },
+  {
+    "feedlabel": "All Africa Uganda",
+    "prettylabel": "All Africa Uganda",
+    "feedurl": "http://allafrica.com/tools/headlines/rdf/uganda/headlines.rdf",
+    "tags": "africa uganda",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/allafrica.png"
+  },
+  {
+    "feedlabel": "All Africa Zambia",
+    "prettylabel": "All Africa Zambia",
+    "feedurl": "http://allafrica.com/tools/headlines/rdf/zambia/headlines.rdf",
+    "tags": "africa zambia",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/allafrica.png"
+  },
+  {
+    "feedlabel": "Investors Internet Technology",
+    "prettylabel": "Investors Internet Technology",
+    "feedurl": "http://feeds.feedburner.com/InternetTechnologyRss?format=xml",
+    "tags": "business tech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Finance Innovation",
+    "prettylabel": "Finance Innovation",
+    "feedurl": "http://www.financeinnovation.nl/feed/",
+    "tags": "banking tech fintech",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/financeinnovation.png"
+  },
+  {
+    "feedlabel": "Tech Crunch",
+    "prettylabel": "Tech Crunch",
+    "feedurl": "http://feeds.feedburner.com/TechCrunch/",
+    "tags": "tech business",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Financieel Dagblad",
+    "prettylabel": "Financieel Dagblad",
+    "feedurl": "https://fd.nl/?rss",
+    "tags": "business",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/fd.png"
+  },
+  {
+    "feedlabel": "RTL technieuws",
+    "prettylabel": "RTL technieuws",
+    "feedurl": "http://www.rtlnieuws.nl/service/rss/technieuws/index.xml",
+    "prettyprovider": "RTL",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Reuters Science",
+    "prettylabel": "Reuters Science",
+    "feedurl": "http://feeds.reuters.com/reuters/scienceNews",
+    "prettyprovider": "Reuters",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "Reuters Technology",
+    "prettylabel": "Reuters Technology",
+    "feedurl": "http://feeds.reuters.com/reuters/technologyNews",
+    "prettyprovider": "Reuters",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "Reuters Top News",
+    "prettylabel": "Reuters Top News",
+    "feedurl": "http://feeds.reuters.com/reuters/topNews",
+    "prettyprovider": "Reuters",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/reuters.jpeg"
+  },
+  {
+    "feedlabel": "BBC UK Technology",
+    "prettylabel": "BBC UK Technology",
+    "feedurl": "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/technology/rss.xml",
+    "prettyprovider": "BBC News",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bbc_news_120x60.gif"
+  },
+  {
+    "feedlabel": "BBC UK Science/Nature",
+    "prettylabel": "BBC UK Technology",
+    "feedurl": "http://newsrss.bbc.co.uk/rss/newsonline_uk_edition/sci/tech/rss.xml",
+    "prettyprovider": "BBC News",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bbc_news_120x60.gif"
+  },
+  {
+    "feedlabel": "BBC World Technology",
+    "prettylabel": "BBC World Technology",
+    "feedurl": "http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml",
+    "prettyprovider": "BBC News",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bbc_news_120x60.gif"
+  },
+  {
+    "feedlabel": "BBC World Science/Nature",
+    "prettylabel": "BBC World Science/Nature",
+    "feedurl": "http://newsrss.bbc.co.uk/rss/newsonline_world_edition/science/nature/rss.xml",
+    "prettyprovider": "BBC News",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bbc_news_120x60.gif"
+  },
+  {
+    "feedlabel": "BBC World Front Page",
+    "prettylabel": "BBC World Front Page",
+    "feedurl": "http://newsrss.bbc.co.uk/rss/newsonline_world_edition/front_page/rss.xml",
+    "prettyprovider": "BBC News",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/bbc_news_120x60.gif"
+  },
+  {
+    "feedlabel": "NOSNieuwsAlgemeen",
+    "prettylabel": "NOS Nieuws Algemeen",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsAlgemeen?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsPolitiek",
+    "prettylabel": "NOS Nieuws Politiek",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsPolitiek?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsBinnenland",
+    "prettylabel": "NOS Nieuws Binnenland",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsBinnenland?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsBuitenland",
+    "prettylabel": "NOS Nieuws Buitenland",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsBuitenland?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsEconomie",
+    "prettylabel": "NOS Nieuws Economie",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsEconomie?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsOpmerkelijk",
+    "prettylabel": "NOS Nieuws Opmerkelijk",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsOpmerkelijk?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsKoningshuis",
+    "prettylabel": "NOS Nieuws Koningshuis",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsKoningshuis?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSNieuwsCultuurEnMedia",
+    "prettylabel": "NOS Nieuws Cultuur En Media",
+    "feedurl": "http://feeds.nos.nl/NOSNieuwsCultuurEnMedia?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSSportAlgemeen",
+    "prettylabel": "NOS Sport Algemeen",
+    "feedurl": "http://feeds.nos.nl/NOSSportAlgemeen?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NieuwsuurAlgemeen",
+    "prettylabel": "Nieuwsuur Algemeen",
+    "feedurl": "http://feeds.nos.nl/NieuwsuurAlgemeen?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "NOSOp3",
+    "prettylabel": "NOS Op 3",
+    "feedurl": "http://feeds.nos.nl/NOSOp3?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/nos.png"
+  },
+  {
+    "feedlabel": "Jeugdjournaal",
+    "prettylabel": "Jeugdjournaal",
+    "feedurl": "http://feeds.nos.nl/Jeugdjournaal?format=xml",
+    "prettyprovider": "NOS",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/jeugdjournaal.JPG"
+  },
+  {
+    "feedlabel": "NU.nl algemeen",
+    "prettylabel": "NU.nl Algemeen",
+    "feedurl": "http://www.nu.nl/rss/algemeen",
+    "prettyprovider": "NU.nl",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NU.nl sport",
+    "prettylabel": "NU.nl Sport",
+    "feedurl": "http://www.nu.nl/rss/sport",
+    "prettyprovider": "NU.nl",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NU.nl internet",
+    "prettylabel": "NU.nl Internet",
+    "feedurl": "http://www.nu.nl/rss/internet",
+    "prettyprovider": "NU.nl",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NU.nl achterklap",
+    "prettylabel": "NU.nl Achterklap",
+    "feedurl": "http://www.nu.nl/rss/achterklap",
+    "prettyprovider": "NU.nl",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NU.nl opmerkelijk",
+    "prettylabel": "NU.nl Opmerkelijk",
+    "feedurl": "http://www.nu.nl/rss/opmerkelijk",
+    "prettyprovider": "NU.nl",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "NU.nl buitenland",
+    "prettylabel": "NU.nl Buitenland",
+    "feedurl": "http://www.nu.nl/rss/buitenland",
+    "prettyprovider": "NU.nl",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "CNET News",
+    "prettylabel": "CNET News",
+    "feedurl": "https://www.cnet.com/rss/news/",
+    "prettyprovider": "CNET",
+    "tags": "news",
+    "clearWords": ["- CNET"],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Top stories",
+    "prettylabel": "Wired Top stories",
+    "feedurl": "https://www.wired.com/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Business",
+    "prettylabel": "Wired Business",
+    "feedurl": "https://www.wired.com/category/business/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Design",
+    "prettylabel": "Wired Design",
+    "feedurl": "https://www.wired.com/category/design/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Tech",
+    "prettylabel": "Wired Tech",
+    "feedurl": "https://www.wired.com/category/gear/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Science",
+    "prettylabel": "Wired Science",
+    "feedurl": "https://www.wired.com/category/science/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Security",
+    "prettylabel": "Wired Security",
+    "feedurl": "https://www.wired.com/category/security/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Transportation",
+    "prettylabel": "Wired Transportation",
+    "feedurl": "https://www.wired.com/category/transportation/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  },
+  {
+    "feedlabel": "Wired Photo",
+    "prettylabel": "Wired Photo",
+    "feedurl": "https://www.wired.com/category/photo/feed/",
+    "prettyprovider": "Wired",
+    "tags": "news",
+    "clearWords": [],
+    "responsefilter": "standard",
+    "itemfilter": "standard",
+    "defaultthumb": "assets/img/newzee.png"
+  }
+
+
+]
+

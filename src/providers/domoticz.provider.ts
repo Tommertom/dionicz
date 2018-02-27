@@ -1,28 +1,21 @@
+//import { DomoticzSettingsModel } from './domoticz.provider';
+import { Events } from 'ionic-angular';
 
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-//import { BehaviorSubject } from "rxjs/Rx";
 
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/mergeAll';
-//import 'rxjs/add/operator/concatAll';
-//import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/timeout';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-//import 'rxjs/add/operator/mergeMap';
-//import 'rxjs/add/operator/onErrorResumeNext';
-//import 'rxjs/add/operator/toArray';
 import 'rxjs/add/operator/concat';
+import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/switchMap';
-//import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/observable/timer';
-
-//import 'rxjs/add/operator/interval';
-
 import 'rxjs/add/observable/interval';
 
 export interface DomoticzSettingsModel {
@@ -35,87 +28,63 @@ export interface DomoticzSettingsModel {
 @Injectable()
 export class DomoticzProvider {
 
-    private settings: DomoticzSettingsModel = {
-        server: '',             // IP adress
-        port: '',               // number as a string, with no colon ('8080')
-        protocol: '',           // https:// or http://
-        refreshdelay: 1
-    };
-
-    private doRefresh: boolean = false;
-
     private domoticzState: Object = {};
-    private isInitialised: boolean = false;
-    //  private domoticzPoller: Observable<Object>;
+    settings: DomoticzSettingsModel;
 
-    constructor(private http: Http) { };
+    constructor(private http: Http, private events: Events) { };
 
-    initDomoticzService(settings, state) {
-
-
-
-        this.settings = settings;
-        this.domoticzState = state;
-        this.isInitialised = true;
-
-        //  this.domoticzPoller =
-
-    }
-
-    getSettings() {
-        return this.settings;
-    }
-
-    changeSettings(settings) {
-        this.settings = settings;
-    }
-
-    private getDomoticzPoll(url, category) {
-        return this.http.get(this.settings.protocol +
-            this.settings.server + ':' +
-            this.settings.port + url)
-            //  .do(c=>{console.log('s1 ',c)})
+    private doDomoticzPollForCategory(settings, url, category) {
+        return this.http.get(settings.protocol +
+            settings.server + ':' +
+            settings.port + url)
             .timeout(3000)
-            //.do(c=>{console.log('s2 ',c)})
             .filter(input => { return (input.ok && (input.status == 200)) })
-            //  .do(c=>{console.log('s3 ',c)})
             .map((data) => data.json())
-            // .do(c=>{console.log('s4 ',c)})
             .filter(data => data['status'] == 'OK')
-            //  .do(c=>{console.log('s5 ',c)})
             .filter(data => data['result'])
             .map(data => data['result'])
-            //  .do(c=>{console.log('s6 ',c)})
             .mergeAll()
-            //   .do(c=>{console.log('s7 ',c)})
-            //.filter(data=> {return (data[''])})
-            //.do(c=>{console.log('s8 ',c)})
             .map(data => Object.assign(data, { _type: category }))
-        //  .do(c=>{console.log('s9 ',c)})
     }
 
-    getDomoticzPoller() {
+    doFullRefresh() {
+        this.events.publish('sync-domoticz');
+    }
 
+    getDomoticzPoller(settings: DomoticzSettingsModel) {
 
         function cleanToNumber(text) {
             if (text) return text.replace(/[^\d.-]/g, '')
             else return null;
         }
 
-        return Observable
-            .timer(0, this.settings.refreshdelay)
-            //.interval(this.settings.refreshdelay)
+        this.settings = settings;
+
+        return Observable.merge(
+
+            Observable.create(observer => {
+
+                // this is needed to force a refresh of the state using the Event system, possibly not the best way (add force-Observable as argument to this function)
+                this.events.subscribe('sync-domoticz', () => {
+                    observer.next('0');
+                })
+            }),
+
+            // this is the poller timer
+            Observable.timer(0, settings.refreshdelay)
+        )
+
+            // we combine all pollers into a chain of poll actions
             .switchMap(() =>
-                this.getDomoticzPoll('/json.htm?type=devices&used=true&order=Name', 'device')
+
+                // first search for devices
+                this.doDomoticzPollForCategory(settings, '/json.htm?type=devices&used=true&order=Name', 'device')
                     .filter(data => {
                         let key = data['idx'] + data['_type'];
                         let stateItem = this.domoticzState[key] || {};
-                        // if (data['LastUpdate'] != stateItem['LastUpdate'])
-                        //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
                         return data['LastUpdate'] != stateItem['LastUpdate'];
                     })
                     .map(data => {
-                        // let's normalise the data received
                         data['_devicetype'] = data['Type'] == 'General' ? data['SubType'] : data['Type'];
                         data['_switched'] = (data['Data'] == 'On');
                         data['_numbervalue'] = Number(cleanToNumber(data['Data']));
@@ -132,53 +101,193 @@ export class DomoticzProvider {
                     .do(item => this.storeState(item, "device"))
 
                     .concat(
-                    this.getDomoticzPoll('/json.htm?type=plans&order=name&used=true', 'plan')
+
+                    // then we'll look for plans
+                    this.doDomoticzPollForCategory(settings, '/json.htm?type=plans&order=name&used=true', 'plan')
                         .filter(data => {
                             let key = data['idx'] + data['_type'];
                             let stateItem = this.domoticzState[key] || {};
-                            // if (data['LastUpdate'] != stateItem['LastUpdate'])
-                            //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
                             return data['LastUpdate'] != stateItem['LastUpdate'];
                         })
                         .do(item => this.storeState(item, "plan"))
                     )
 
                     .concat(
-                    this.getDomoticzPoll('/json.htm?type=scenes', 'scene')
+
+                    // once that is done, we go for scenes
+                    this.doDomoticzPollForCategory(settings, '/json.htm?type=scenes', 'scene')
                         .filter(data => {
                             let key = data['idx'] + data['_type'];
                             let stateItem = this.domoticzState[key] || {};
-                            // if (data['LastUpdate'] != stateItem['LastUpdate'])
-                            //   console.log('STATE ITEM ', stateItem, key, this.domoticzState, data['LastUpdate']);
                             return data['LastUpdate'] != stateItem['LastUpdate'];
                         })
                         .do(item => this.storeState(item, "scene"))
                     )
 
+                    .concat(
+
+                    // we like to get the user variables as well
+                    this.doDomoticzPollForCategory(settings, '/json.htm?type=command&param=getuservariables', 'uservariables')
+                        .filter(data => {
+                            let key = data['idx'] + data['_type'];
+                            let stateItem = this.domoticzState[key] || {};
+                            return data['LastUpdate'] != stateItem['LastUpdate'];
+                        })
+                        .do(item => this.storeState(item, "uservariables"))
+
+                    )
+
+                    .concat(
+
+                    // and for the log, we cannot use the helper function
+                    this.http.get(settings.protocol +
+                        settings.server + ':' +
+                        settings.port + '/json.htm?type=command&param=getlog')
+                        .timeout(3000)
+                        .filter(input => { return (input.ok && (input.status == 200)) })
+                        .map((data) => data.json())
+                        .filter(data => data['status'] == 'OK')
+                        .filter(data => data['result'])
+                        .filter(data => {
+                            let key = 'log'
+                            let stateItem = this.domoticzState[key] || {};
+                            return data['LastLogTime'] != stateItem['LastUpdate'];
+                        })
+                        .map(data => Object.assign(data, { idx: 'log', _type: 'log' }))
+                        .do(item => this.storeState(item, "log"))
+                        .map(data => Object.assign(data, { results: [] }))
+
+                    )
+
+                    // and a finale enrichment of the received data
                     .map(data => Object.assign(data, { _uid: data['idx'] + data['_type'] }))
-                    .do(data => { console.log('SENDING STUFF', data, this.domoticzState) })
+           //         .do(data => { console.log('SENDING STUFF', data, this.domoticzState) })
             )
     }
 
     storeState(item, type) {
-        //   let hash = hashCode(item['idx'] + type);
         let hash = item['idx'] + type;
         this.domoticzState[hash] = Object.assign({ _type: type }, item);
     }
 
-    getState() {
-        return this.domoticzState;
+    getAvailableUIDs() {
+        return Object.keys(this.domoticzState);
     }
 
-    doneDomoticzService() {
-        this.doRefresh = false;
-        this.isInitialised = false;
+    getState(UID?) {
+        if (UID == undefined) return this.domoticzState
+        else return this.domoticzState[UID];
     }
 
-    /**
-       * Get observable to watch Domoticz Plan data
-       * 
-       */
+    hexToRgb(hex) {
+        hex = parseInt(((hex.indexOf('#') > -1) ? hex.substring(1) : hex), 16);
+        return { r: hex >> 16, g: (hex & 0x00FF00) >> 8, b: (hex & 0x0000FF) };
+    };
+
+    hexToHsb(hex) {
+        return this.rgbToHsb(this.hexToRgb(hex));
+    };
+
+    rgbToHsb(rgb) {
+        var hsb = { h: 0, s: 0, b: 0 };
+        var min = Math.min(rgb.r, rgb.g, rgb.b);
+        var max = Math.max(rgb.r, rgb.g, rgb.b);
+        var delta = max - min;
+        hsb.b = max;
+        hsb.s = max != 0 ? 255 * delta / max : 0;
+        if (hsb.s != 0) {
+            if (rgb.r == max) hsb.h = (rgb.g - rgb.b) / delta;
+            else if (rgb.g == max) hsb.h = 2 + (rgb.b - rgb.r) / delta;
+            else hsb.h = 4 + (rgb.r - rgb.g) / delta;
+        } else hsb.h = -1;
+        hsb.h *= 60;
+        if (hsb.h < 0) hsb.h += 360;
+        hsb.s *= 100 / 255;
+        hsb.b *= 100 / 255;
+        return hsb;
+    };
+
+    getGraphs(device, popup) {
+        var sensor = 'counter';
+        var sensortype = device['SubType'];
+        var switchtype = device['SensorUnit'];
+        var txtLabelOrg = sensortype;
+        var txtUnit = "?";
+
+        if (device['Type'] == 'Rain') sensor = 'rain';
+        if (device['Type'] == 'Wind') sensor = 'wind';
+        if (device['SubType'] == 'Percentage' || device['SubType'] == 'Custom Sensor') {
+            sensor = 'Percentage';
+            txtUnit = '%';
+        }
+        if (device['Type'] == 'Temp' || device['Type'] == 'Temp + Humidity' || device['Type'] == 'Temp + Humidity + Baro') {
+            sensor = 'temp';
+            txtUnit = '°';
+        }
+
+        if (sensortype == "Gas") {
+            txtUnit = "m3";
+        }
+        else if (sensortype == "Energy") {
+            txtUnit = "W";
+        }
+        else if (sensortype == "Custom Sensor") {
+            txtUnit = switchtype;
+            sensor = "Percentage";
+        }
+        else if (sensortype == "Visibility") {
+            txtUnit = "km";
+        }
+        else if (sensortype == "Radiation") {
+            txtUnit = "Watt/m2";
+        }
+        else if (sensortype == "Pressure") {
+            txtUnit = "Bar";
+        }
+        else if (sensortype == "Soil Moisture") {
+            txtUnit = "cb";
+        }
+        else if (sensortype == "Leaf Wetness") {
+            txtUnit = "Range";
+        }
+        else if ((sensortype == "Voltage") || (sensortype == "A/D")) {
+            txtUnit = "mV";
+        }
+        else if (sensortype == "VoltageGeneral") {
+            txtLabelOrg = "Voltage";
+            txtUnit = "V";
+        }
+        else if ((sensortype == "DistanceGeneral") || (sensortype == "Distance")) {
+            txtLabelOrg = "Distance";
+            txtUnit = "cm";
+        }
+        else if (sensortype == "Sound Level") {
+            txtUnit = "dB";
+        }
+        else if ((sensortype == "CurrentGeneral") || (sensortype == "Current")) {
+            txtLabelOrg = "Current";
+            txtUnit = "A";
+        }
+        else if (switchtype == "Weight") {
+            txtUnit = "kg";
+        }
+        else if (sensortype == "Waterflow") {
+            txtUnit = "l/min";
+            sensor = "Percentage";
+        }
+
+        var txtLabel = txtLabelOrg + " (" + txtUnit + ")";
+        if (sensortype == "Custom Sensor") {
+            txtLabel = txtUnit;
+        }
+
+        // showGraph(device['idx'], device['Name'], txtUnit, 'initial', device['CounterToday'], false, sensor, popup);
+
+        //	url: settings['domoticz_ip']+'/json.htm?type=graph&sensor='+sensor+'&idx='+idx+'&range='+realrange+'&time='+new Date().getTime()+'&jsoncallback=?',
+
+    }
+
+    ////////////////////
     toggleDevice(idx: string) {
         return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=Toggle',
@@ -198,33 +307,18 @@ export class DomoticzProvider {
             { '[IDX]': idx, '[HEX]': hex })
     }
 
-
-
-    /**
-       * Get observable to watch Domoticz Plan data
-       * 
-       */
     setDeviceDimLevel(idx: string, level: number) {
         return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=Set%20Level&level=[LEVEL]',
             { '[IDX]': idx, '[LEVEL]': level })
     }
 
-
-    /**
-       * Get observable to watch Domoticz Plan data
-       * 
-       */
     setDeviceSetPoint(idx: string, setpoint: number) {
         return this.callAPI(
             '/json.htm?type=command&param=setsetpoint&idx=[IDX]&setpoint=[SETPOINT]',
             { '[IDX]': idx, '[SETPOINT]': setpoint })
     }
 
-    /**
-       * Get observable to watch Domoticz Plan data
-       * 
-       */
     switchDeviceOn(idx: string) {
         return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=On',
@@ -232,40 +326,24 @@ export class DomoticzProvider {
 
     }
 
-    /**
-       * Get observable to watch Domoticz Plan data
-       * 
-       */
     switchDeviceOff(idx: string) {
         return this.callAPI(
             '/json.htm?type=command&param=switchlight&idx=[IDX]&switchcmd=Off',
             { '[IDX]': idx })
     }
 
-    /**
-       * Switch a scene on
-       * 
-       */
     switchSceneOn(idx: string) {
         return this.callAPI(
             '/json.htm?type=command&param=switchscene&idx=[IDX]&switchcmd=On',
             { '[IDX]': idx })
     }
 
-    /**
-       * Switch a scene off
-       * 
-       */
     switchSceneOff(idx: string) {
         return this.callAPI(
             '/json.htm?type=command&param=switchscene&idx=[IDX]&switchcmd=Off',
             { '[IDX]': idx })
     }
 
-    /**
-       * Add message to the log
-       * 
-       */
     addLog(message: string) {
         return this.callAPI(
             '/json.htm?type=command&param=addlogmessage&message=[MESSAGE]',
@@ -282,8 +360,6 @@ export class DomoticzProvider {
         // do a search-replace of all the update data available and then do the HTTP request, 
         for (let key in payload)
             api = api.replace(key, payload[key]); // should do this until all occurences as gone, TODO
-
-        //console.log('API call', api, payload);
 
         return this.http.get(
             this.settings.protocol +

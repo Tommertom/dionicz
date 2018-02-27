@@ -1,8 +1,7 @@
+import { DomoticzProvider } from './../../providers/domoticz.provider';
 import { Observable } from 'rxjs/Observable';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Input, Component } from '@angular/core';
-
-import { WidgetComponent } from './../widget/widget.component';
 
 @Component({
     selector: 'domoticz-widget',
@@ -11,18 +10,27 @@ import { WidgetComponent } from './../widget/widget.component';
 })
 export class DomitczWidgetComponent { //extends WidgetComponent
 
-    @Input() state: Object;
     itemtype: string = '';
 
-   @Input() itemid: Object;
+    @Input() state: Object;
 
-    constructor() { }
+    @Input() uid: Object;
+
+    constructor() {
+        
+    }
 
     ngAfterContentInit() {
-        this.itemtype = this.state['_type'];
+
+        console.log('GETTING somtiing', this.state, this.uid, typeof this.state)
+
+        if (this.state)
+            if (this.state['_type'])
+                this.itemtype = this.state['_type']
+
 
         //uid.replace(/[0-9]/g, '')
-        //   console.log('DomitczWidgetComponent  ngAfterContentInit', this.state, this.itemtype)
+        //console.log('DomitczWidgetComponent  ngAfterContentInit', this.state, this.itemtype)
     }
 
 }

@@ -1,17 +1,97 @@
 <ion-header>
   <ion-navbar>
-    <ion-title (click)="showStuff()" >Home</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openWidgetSelector()">
+        Add widget
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <span #gridPackery class="grid" >
-    <ng-container *ngFor="let i of dashboardLayout.widgetList" >
-    <domoticz-widget class="grid-item" id="{{i}}" [state]="dashboardLayout['domoticzState'][i]"></domoticz-widget>
+http://masteringionic.com/blog/2017-12-04-creating-a-css-masonry-layout-for-an-ionic-application/
+
+
+<ion-grid>
+  <ion-row>
+    <ion-col col-4>
+      1 of 4
+    </ion-col>
+    <ion-col col-2>
+      2 of 4
+    </ion-col>
+    <ion-col col-2>
+      3 of 4
+    </ion-col>
+    <ion-col col-4>
+      4 of 4
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid>
+  <ion-row>
+    <ion-col col-12 col-sm>
+      1 of 4
+    </ion-col>
+    <ion-col col-12 col-sm>
+      2 of 4
+    </ion-col>
+    <ion-col col-12 col-sm>
+      3 of 4
+    </ion-col>
+    <ion-col col-12 col-sm>
+      4 of 4
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid>
+  <ion-row>
+    <ion-col col-3>
+      1 of 2
+    </ion-col>
+    <ion-col col-3 offset-3>
+      2 of 2
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      1 of 2
+    </ion-col>
+    <ion-col>
+      2 of 2
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      1 of 3
+    </ion-col>
+    <ion-col>
+      2 of 3
+    </ion-col>
+    <ion-col>
+      3 of 3
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+  <ng-container *ngFor="let i of dashboardLayout.widgetList">
+    <ng-container [ngSwitch]="i.service">
+      <ng-container *ngSwitchCase="'domoticz'">
+        <domoticz-widget [uid]="i.uid" [state]="serviceState[i.service][i.uid]"></domoticz-widget>
+      </ng-container>
+      <ng-container *ngSwitchDefault>THIS2 SHOULD NOT HAPPEN </ng-container>
     </ng-container>
-  </span>
+  </ng-container>
 
-  <button (click)="setPosition()">SLKDJKASKDHASKDSJD</button>
 </ion-content>
-

@@ -1,0 +1,42 @@
+<html>
+
+  <head>
+    <title>Bahnhofsuhr</title>
+    
+      <!--[if IE]>
+        <script type="text/javascript" src="excanvas.js"></script>
+      <![endif]-->
+
+      <script type="text/javascript" src="station-clock.js"></script>
+      <script type="text/javascript">
+
+      var clock = new StationClock("clock");
+      clock.body = StationClock.RoundBody;
+      clock.dial = StationClock.SwissStrokeDial;
+      clock.hourHand = StationClock.SwissHourHand;
+      clock.minuteHand = StationClock.SwissMinuteHand;
+      clock.secondHand = StationClock.SwissSecondHand;
+      clock.boss = StationClock.NoBoss;
+      clock.minuteHandBehavoir = StationClock.BouncingMinuteHand;
+      clock.secondHandBehavoir = StationClock.OverhastySecondHand;
+
+      animate();
+
+      function animate() {
+        clock.draw();
+        window.setTimeout("animate()", 50);
+      }
+
+    </script>
+	
+  </head>
+  
+  <body>
+    <div style="text-align: center; padding-top: 50px">
+      <canvas id="clock" width="400" height="400">
+        Fehlermeldung       
+      </canvas>
+    </div>
+  </body>
+  
+</html>

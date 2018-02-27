@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title> Widget selector</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="closeReport()">
+        close
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  Available widgets for services
+  <ion-card *ngFor="let service of availableServices">
+    <h1>{{service.name}}</h1>
+    <ion-list>
+      <ion-item *ngFor="let uid of service.availableUIDs" (click)="itemClicked(service.name,uid.uid)">
+        <h1>{{uid.uid}} {{uid.state.Data}} </h1>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

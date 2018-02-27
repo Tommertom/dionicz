@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Input, Component, OnChanges, SimpleChanges } from '@angular/core';
 
-import { WidgetComponent } from './../widget/widget.component';
+//import { WidgetComponent } from './../widget/widget.component';
 import { DomoticzProvider } from './../../providers/domoticz.provider';
 
 @Component({

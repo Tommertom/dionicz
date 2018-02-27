@@ -1,12 +1,19 @@
+import { WidgetSelectorPage } from './../widgetselector/widgetselector';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { DomoticzProvider } from './../../providers/domoticz.provider';
+import { WeatherProvider } from './../../providers/weather.provider';
 
-import * as Packery from 'packery';
-import * as Draggabilly from 'draggabilly';
+declare var StationClock;
+
+export interface DioniczService {
+  name: string;             // IP adress
+  availableUIDs: Array<string>;
+}
+
 
 @Component({
   selector: 'page-home',
@@ -14,214 +21,144 @@ import * as Draggabilly from 'draggabilly';
 })
 export class HomePage {
 
-  @ViewChild('gridPackery') gridPackery;
+  serviceSubscriptions: Object = {};
+  serviceState: Object = {};
+  serviceList: Array<DioniczService> = [];
 
-  draggies = [];
-  pckry: any;
-  stuff: any;
+  dashboardLayout: Object = {};
 
-  dashboardLayout: Object = {
-    widgetList: [],
-    domoticzState: {}
+  constructor(
+
+    public navCtrl: NavController,
+    private domoticz: DomoticzProvider,
+    private modalCtrl: ModalController,
+    private storage: Storage,
+    private weather: WeatherProvider
+
+  ) { }
+
+
+  ionViewWillEnter() {
+    this.loadDashboard()
+      .then(() => {
+        this.setDataListners();
+      })
   }
 
-  domoticzSubscription: any;
+  setDataListners() {
 
+    this.serviceSubscriptions = {};
 
-  constructor(public navCtrl: NavController,
-    private domoticz: DomoticzProvider,
-    private storage: Storage) {
+    let servicePollers = {
 
-    this.dashboardLayout = {
-      widgetList: [],
-      domoticzState: {}
+      'domoticz': this.domoticz.getDomoticzPoller({
+        server: 'localhost',             // IP adress
+        port: '8080',              // number as a string, with no colon ('8080')
+        protocol: 'http://',           // https:// or http://
+        refreshdelay: 5000       // the ms to wait before a full refresh
+      }),
+
+      'weather': this.weather.getWeatherPoller()
     }
 
-    this.storage.remove('dashboardLayout');
 
-    console.log('In constructor home');
+    console.log('Subscribing ', servicePollers);
 
-    // try to find a state, and if found, load it or create it
-    this.storage.ready()
-      .then(() => { return this.storage.get('dashboardLayout') })
-      .then(value => {
+    this.serviceState = {}
 
-        console.log('Storage get ', value)
+    // let's subscribe and store the state so we forward these changes to all components
+    Object.keys(servicePollers).map(service => {
 
-        if (value) {
-          if (value['widgetList']) {
-            console.log('Found dashboard', value);
-            this.dashboardLayout = value;
-            //   this.domoticzState = value['lastState'];
+      console.log('Subscribing ', service);
 
-            this.domoticzSubscription =
-              this.domoticz.getDomoticzPoller()
-                .subscribe(data => {
-                  // console.log('RECEIVING STUFF1', data)
-                  let uid = data['_uid'];
-                  this.dashboardLayout['domoticzState'][uid] = data;
-                })
-          }
-        } else {
+      this.serviceState[service] = {};
 
-          console.log('Trying to find stuff');
+      this.serviceSubscriptions[service] =
 
-          // get initial state of domoticz widgets
-          let s = this.domoticz.getDomoticzPoller().subscribe((item) => {
+        servicePollers[service].subscribe(data => {
+          let uid = data['_uid'];
+          if (uid == undefined) uid = 'nouid';
 
-            console.log('FOUND item', item);
+          console.log('Setting state ', data, this.serviceState, service);
+          if (this.serviceState[service]) this.serviceState[service][uid] = data
+          else console.log('WTF???')
+        })
 
-            let uid = item['_uid'];
-            if (this.dashboardLayout['widgetList'].indexOf(uid) < 0) {
-
-              if (uid) {
-                this.dashboardLayout['widgetList'].push(item['_uid'])
-                this.dashboardLayout['domoticzState'][uid] = item;
-              } else console.log('RECEIVED UNDEFINED????', item);
-            }
-          })
-
-          // we will listen 5 seconds for widgets
-          setTimeout(() => {
-            console.log('SAVING dashboard', this.dashboardLayout)
-            s.unsubscribe();
-            this.storage.set('dashboardLayout', this.dashboardLayout);
-
-
-            this.domoticzSubscription =
-              this.domoticz.getDomoticzPoller()
-                .subscribe(data => {
-                  //  console.log('RECEIVING STUFF2', data)
-                  let uid = data['_uid'];
-                  this.dashboardLayout['domoticzState'][uid] = data;
-                })
-
-          }, 10000);
-        }
-      })
+    })
   }
 
-  ionViewDidEnter() {
+  openWidgetSelector() {
 
-    setTimeout(_ => {
+    this.serviceList = [];
 
-      this.pckry = new Packery(this.gridPackery.nativeElement, {
-        itemSelector: ".grid-item",
-        gutter: 10,
-        columnWidth: 60
-      });
+    let uidStateList = [];
+    let availableUIDs = this.domoticz.getAvailableUIDs();
 
-      this.pckry.getItemElements().forEach(item => {
-        let draggie = new Draggabilly(item, { grid: [20, 20] });
-        this.pckry.bindDraggabillyEvents(draggie);
-        this.draggies.push(draggie);
-
-        draggie.enable();
-        draggie.bindHandles();
-      })
-
-      console.log('ionViewDidEnter pckry', this.pckry);
-      /*
-     this.items.map( function( item ) {
-         return {
-           attr: item.element.getAttribute( attrName ),
-           x: item.rect.x / _this.packer.width
-         }
-     
-      */
-    }, 500);
-
-  }
-
-  showStuff() {
-    console.log(' PACKERY', this.pckry);
-
-    let attrName = 'id';
-    let items = this.pckry.items;
-    items.map(item => {
-      console.log('ITEMSSAD attr x', item.element.getAttribute(attrName), item.rect.x / this.pckry.packer.width)
+    availableUIDs.map(uid => {
+      uidStateList.push({ uid: uid, state: this.serviceState['domoticz'][uid] })
     })
 
+    this.serviceList.push({
+      name: 'domoticz',
+      availableUIDs: uidStateList
+    })
 
-    this.stuff = this.pckry.items.map((item) => {
-      return {
-        attr: item.element.getAttribute(attrName),
-        x: item.rect.x / this.pckry.packer.width
+    let modal = this.modalCtrl.create(WidgetSelectorPage, {
+      availableServices: this.serviceList,
+      currentState: this.serviceState
+    })
+
+    modal.onDidDismiss(data => {
+      if (data) {
+        console.log('RECEVEIVED DATA', data)
+        this.dashboardLayout['widgetList'].push({ service: data['service'], uid: data['uid'] })
+        //console.log('THID SB', this.serviceState[data['service']][data['uid']]);
+
+        this.saveDashboard();
       }
     })
-    console.log('STUFFFFF', this.stuff);
 
-
-    this.storage.set('PACKERY', this.stuff);
+    modal.present({});
   }
 
-  //https://github.com/metafizzy/packery/issues/337
+  loadDashboard() {
 
-  setPosition() {
+    interface dioniczState {
+      dashboardLayout: Object;
+      serviceState: Object;
+    }
 
-    let positions;
+    return this.storage.ready()
+      .then(() => { return this.storage.get('dionicz') })
+      .then(val => {
+        //  let foundState: dioniczState = Object.assign({}, val);
+        if (val != null) {
 
-    this.storage.get('PACKERY')
-      .then(value => {
+          console.log('loaded data', val);
+          this.serviceState = val['serviceState']
 
-        if (value) {
-          positions = value;
-          console.log('GETTING VLAUE', positions);
+          // this is awkward but necessary, as Angular updating fails
+          setTimeout(() => {
+            this.dashboardLayout = val['dashboardLayout'];
+          }, 500);
 
-          //    this.pckry._resetLayout();
-          let attrName = 'id';
-          this.pckry._resetLayout();
+        } else {
 
-          let element = this.gridPackery.nativeElement;
-          console.log('ELEMENT', element)
-          // set item order and horizontal position from saved positions
-          this.pckry.items = positions.map(function (itemPosition) {
+          this.dashboardLayout = {
+            widgetList: [] // should contain {service:'', uid:''}
+          };
 
-            let selector = '[' + attrName + '="' + itemPosition.attr + '"]'
-            let itemElem = element.querySelector(selector);
-            let item = this.pckry.getItem(itemElem);
-
-            console.log('SETTING PCKR', selector, itemElem, item);
-
-            item.rect.x = itemPosition.x * this.pckry.packer.width;
-            return item;
-          }, this);
-          this.pckry.shiftLayout();
+          this.serviceState = {};
         }
       })
   }
 
+  saveDashboard() {
+    return this.storage.set('dionicz', { dashboardLayout: this.dashboardLayout, serviceState: this.serviceState });
+  }
+
+  ionViewWillLeave() {
+    this.saveDashboard();
+  }
 }
-
-/*
-
-Initialize Packery, but disable initLayout. Then get saved position data, in this case from localStorage. initShiftLayout requires position object and the HTML attribute (data-item-id).
-
-// init Packery
-var $grid = $('.grid').packery({
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-sizer',
-  percentPosition: true,
-  initLayout: false // disable initial layout
-});
-
-// get saved dragged positions
-var initPositions = localStorage.getItem('dragPositions');
-// init layout with saved positions
-$grid.packery( 'initShiftLayout', initPositions, 'data-item-id' );
-Make items draggable. On dragItemPositioned, save item position to localStorage. The custom getShiftPositions requires that HTML attribute.
-
-// make draggable
-$grid.find('.grid-item').each( function( i, itemElem ) {
-  var draggie = new Draggabilly( itemElem );
-  $grid.packery( 'bindDraggabillyEvents', draggie );
-});
-
-// save drag positions on event
-$grid.on( 'dragItemPositioned', function() {
-  // save drag positions
-  var positions = $grid.packery( 'getShiftPositions', 'data-item-id' );
-  localStorage.setItem( 'dragPositions', JSON.stringify( positions ) );
-});
-*/
 
